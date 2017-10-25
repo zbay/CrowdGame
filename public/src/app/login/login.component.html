@@ -1,0 +1,19 @@
+<form #loginForm="ngForm" (submit)="login()" class="whiteBox col">
+  <div class="form-group">
+    <label for="email">*Email:</label>
+    <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required/>
+  </div>
+
+  <div *ngIf="email.errors && (email.dirty || email.touched)" class="error">Please enter an email!</div>
+
+  <div class="form-group">
+    <label for="password">*Password:</label>
+    <input type="password" name="password" [(ngModel)]="user.password" #password="ngModel" required/>
+  </div>
+
+  <div *ngIf="password.errors && (password.dirty || password.touched)" class="error">Please enter a password!</div>
+
+  <div *ngIf="errorMsg" class="error">{{errorMsg}}.</div>
+  
+  <input type="submit" value="Login" [disabled]="loginForm.invalid"/>
+</form>

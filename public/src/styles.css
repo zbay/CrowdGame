@@ -1,0 +1,17 @@
+.col{
+    display:inline-block;
+    vertical-align: top;
+}
+.whiteBox{
+    padding:5px;
+    border:2px solid black;
+}
+.jumbotron{
+    font-weight:bold;
+    padding:40px;
+    text-align:center;
+    border:2px solid black;
+}
+.error{
+    color:red;
+}
