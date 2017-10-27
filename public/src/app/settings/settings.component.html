@@ -3,10 +3,5 @@
   settings works!
   {{ user | json }}
 </p>
-<!-- File input for the file-upload plugin, with special ng2-file-upload directive called ng2FileSelect -->
-<input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
-<!-- button to trigger the file upload when submitted -->
-<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-      Upload profile picture
-</button>
-<img class="img-responsive" src="assets/img/angular.jpg"/>
+<img class="img-responsive" *ngIf="user && user.imgURL" [src]="user.imgURL"/>
+<div class="error" *ngIf="errorMsg">{{errorMsg}}</div>

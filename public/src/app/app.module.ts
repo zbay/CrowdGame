@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { ValidUrlDirective } from './shared/url.validator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +31,7 @@ import { GameService } from './game.service';
     SettingsComponent,
     NavComponent,
     SearchComponent,
-    FileSelectDirective
+    ValidUrlDirective
   ],
   imports: [
     BrowserModule,

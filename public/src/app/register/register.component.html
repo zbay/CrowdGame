@@ -1,4 +1,6 @@
-<form #registerForm="ngForm" (submit)="register()" class="whiteBox col">
+<form #registerForm="ngForm" (submit)="register()" class="col">
+  <fieldset>
+  <legend>Register</legend>
   <div class="form-group">
       <label for="firstName">*First Name:</label>
       <input type="text" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" required/>
@@ -36,7 +38,15 @@
 
   <div *ngIf="user.password !== user.passwordConfirmation && (password.dirty || password.touched) && (passwordConfirmation.dirty || passwordConfirmation.touched)" class="error">Password confirmation must match password.</div>
 
+  <div class="form-group">
+    <label for="imgURL">*Profile Pic URL:</label>
+    <input type="text" name="imgURL" [(ngModel)]="user.imgURL" #imgURL="ngModel" required validateUrl />
+  </div>
+
+  <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)">Please enter a valid URL, ending in .jpg, .jpeg, .png, or .gif!</div>
+ 
   <div *ngIf="errorMsg" class="error">{{errorMsg}}</div>
   
   <input type="submit" value="Register" [disabled]="registerForm.invalid"/>
+</fieldset>
 </form>

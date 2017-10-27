@@ -13,7 +13,6 @@ const uploadURL = 'http://localhost:7654/api/profilePic';
 export class SettingsComponent implements OnInit {
   user;
   errorMsg;
-  public uploader:FileUploader = new FileUploader({url: uploadURL, itemAlias: 'photo'});
 
   constructor(private _router: Router, private _loginService: LoginService) { }
   
@@ -24,20 +23,14 @@ export class SettingsComponent implements OnInit {
         }
         else{
           this.user = data.user;
-       //override the onAfterAddingfile property of the uploader so it doesn't authenticate with //credentials.
-       this.uploader.onAfterAddingFile = (file)=> { file.withCredentials = false; };
-       //overide the onCompleteItem property of the uploader so we are 
-       //able to deal with the server response.
-       this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-            console.log("ImageUpload:uploaded:", item, status, response);
-        };
         }
-      }, this.showError.bind(this)); 
+        },
+        this.showError.bind(this)
+      ); 
     }
 
     showError(err){
       console.log(err);
       this.errorMsg = JSON.parse(err._body).error;
     }
-
-}
+  }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+//import { ValidUrlDirective } from '../shared/url.validator';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  user = {firstName: "", lastName: "", email: "", password: "", passwordConfirmation: ""}
+  user = {firstName: "", lastName: "", email: "", password: "", passwordConfirmation: "", imgURL: ""}
   errorMsg = undefined;
 
   constructor(private _router: Router, private _loginService: LoginService) { }

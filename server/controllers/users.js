@@ -1,34 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = mongoose.model('User');
-const crypto = require('crypto');
-const mime = require('mime');
 //const moment = require('moment');
-const multer = require('multer');
-var storage = multer.diskStorage({ // this is the mechanism for randomly naming the file and preserving the file extension
-    destination: function (req, file, cb) {
-      cb(null, "public/src/assets/uploads")
-    },
-    filename: function (req, file, cb) {
-      crypto.pseudoRandomBytes(16, function (err, raw) {
-          let extension = "";
-          if(file.mimetype === "image/jpeg"){
-            extension = "jpg";
-          }
-          else if(file.mimetype === "image/png"){
-            extension = "png";
-          }
-          else if(file.mimetype === "image/gif"){
-            extension = "gif";
-          }
-          else{
-              throw new Error("Improper file type!");
-          }
-        cb(null, raw.toString('hex') + Date.now() + '.' + extension);
-      });
-    }
-  });
-var upload = multer({storage: storage}).single('photo');
 
 let self = module.exports = {
   newUser: function(req, res) {
@@ -85,6 +58,7 @@ let self = module.exports = {
                     bcrypt.compare(req.body.password, user.password, function(err, matched){
                         if(matched){
                             req.session.user_id = user._id;
+                            console.log(req.session.user_id);
                             user.strikes = 0;
                             user.save((error, msg) => {
                                 res.json({success: "Logged in correctly!"});
@@ -107,6 +81,7 @@ let self = module.exports = {
             return res.status(500).json({error: "Server error. Could not retrieve user"});
         }
         else{
+            console.log("me id: " + req.session.user_id);
             res.json({user: user});
         }
     });
@@ -127,20 +102,6 @@ let self = module.exports = {
             }
         });
     });
-  },
-  addProfPic: function(req, res){
-    console.log(upload);
-    upload(req, res, function (err) {
-        //console.log(req);
-        console.log(req.file);
-        if(err){
-          console.log(err);
-          return res.status(422).send("an Error occured")
-        }  
-        let path = req.file.path;;
-        console.log(path);
-        return res.json({success: "Upload Completed for "+ path}); 
-    });     
   },
   logout: function(req, res){
     self.reset_session(req);

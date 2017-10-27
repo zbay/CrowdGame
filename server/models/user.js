@@ -30,7 +30,17 @@ const UserSchema = new mongoose.Schema({
         minlength: [1, "The password field cannot be blank!"],
         required: [true, "The password field cannot be blank!"],
     },
-    imgURL: {type: String},
+    imgURL: {type: String,
+         default: "http://walyou.com/wp-content/uploads/2010/12/facebook-profile-picture-no-pic-avatar.jpg",
+        validate: [
+            {
+                validator: function(address){ // test that it's a valid URL
+                    const urlRegex = /^(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)$/;
+                    return urlRegex.test(address);
+                },
+                message: "Please enter a valid image URL (ending with .jpg, .png, or .gif)!"
+            }
+        ]},
     games_created: [{type: Schema.Types.ObjectId, ref: 'Game'}],
     games_joined: [{type: Schema.Types.ObjectId, ref: 'Game'}],
     last_login_attempt: {type: Number}, // minutes since 1/1/1970
