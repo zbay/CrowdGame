@@ -1,4 +1,44 @@
 <app-nav></app-nav>
-<p>
-  newgame works!
-</p>
+<form #form="ngForm" (submit)="newGame()">
+  <fieldset>
+    <legend>New Game</legend>
+    <div class="form-group">
+      <label for="name">Game:</label>
+      <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
+    </div>
+
+    <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your game a name!</div>
+
+    <div class="form-group">
+      <label for="location">Location (be specific):</label>
+      <input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/>
+    </div>
+
+    <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">A game location is required!</div>
+
+    <div class="form-group">
+      <label for="time">Time (local):</label>
+      <input type="text" name="time" [(ngModel)] = "game.time" #time="ngModel" required />
+    </div>
+
+    <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please specify an approximate game time!</div>
+
+    <div class="form-group">
+      <label for="details">Details:</label>
+      <input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required />
+    </div>
+
+    <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">A game description is required!</div>
+
+    <div class="form-group">
+      <label for="size">Number of players:</label>
+      <input type="number" name="size" step="1" [(ngModel)]="game.size" #size="ngModel" required min="2" />
+    </div>
+
+    <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please specify a valid number of players!</div>
+
+    <input type="submit" value="Post Game" [disabled]="form.invalid"/>
+
+    <div class="error" *ngIf="errorMsg">{{errorMsg}}</div>
+  </fieldset>
+</form>

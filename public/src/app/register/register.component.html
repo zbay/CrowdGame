@@ -17,10 +17,10 @@
 
   <div class="form-group">
     <label for="email">*Email:</label>
-    <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required/>
+    <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required validEmail/>
   </div>
 
-  <div *ngIf="email.errors && (email.dirty || email.touched)" class="error">Please enter an email!</div>
+  <div *ngIf="email.errors && (email.dirty || email.touched)" class="error">Please enter a valid email!</div>
 
   <div class="form-group">
     <label for="password">*Password:</label>
@@ -40,10 +40,10 @@
 
   <div class="form-group">
     <label for="imgURL">*Profile Pic URL:</label>
-    <input type="text" name="imgURL" [(ngModel)]="user.imgURL" #imgURL="ngModel" required validateUrl />
+    <input type="text" name="imgURL" [(ngModel)]="user.imgURL" #imgURL="ngModel" required validUrl />
   </div>
 
-  <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)">Please enter a valid URL, ending in .jpg, .jpeg, .png, or .gif!</div>
+  <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)" class="error">Please enter a valid URL ending in .jpg, .jpeg, .png, or .gif!</div>
  
   <div *ngIf="errorMsg" class="error">{{errorMsg}}</div>
   

@@ -20,6 +20,7 @@ let self = module.exports = {
                         return res.status(403).json({error: "Password error! Make sure they're long enough and that they match!"});
                     }
                     else{
+                      console.log(err);
                       return res.status(403).json({error: "Failed to save new user to database! Try again!"});
                     }
                 }
@@ -77,28 +78,44 @@ let self = module.exports = {
   },
   getMe: function(req, res){
     User.findOne({_id: req.session.user_id}).exec((err, user) => {
-        if(err){
+        if(err || !user || !user.firstName){
             return res.status(500).json({error: "Server error. Could not retrieve user"});
         }
         else{
             console.log("me id: " + req.session.user_id);
-            res.json({user: user});
+            let trimmedUser = {firstName: user.firstName, lastName: user.lastName, email: user.email, imgURL: user.imgURL};
+            res.json({user: trimmedUser});
         }
     });
   },
   editMe: function(req, res){
-    User.findOne({_id: req.session.user_id}).exec((err, user) => {
-        user.firstName = req.body.firstName;
-        user.lastName = req.body.lastName;
-        user.email = req.body.email;
-        user.password = req.body.password;
-        //user.imgURL = req.body.imgURL;
-        user.save((err, newUser) => {
-            if(err){
-                return res.status(500).json({error: "Server error. Could not retrieve user"});
+    User.find({_id: req.session.user_id}).exec((err, users) => {
+        if(err){
+            return res.status(500).json({error: "Server error. Could not query database for user!"});
+        }
+        if(users.length === 0){
+            return res.status(403).json({error: "Could not find this user to edit!"});
+        }
+        let user = users[0];
+        bcrypt.compare(req.body.currentPassword, user.password, function(err2, matched){
+            if(err2){
+                return res.status(500).json({error: "Server error. Could not check password!"});
+            }
+            if(matched){
+                user.email = req.body.email;
+                user.imgURL = req.body.imgURL;
+                if(req.body.newPassword && req.body.newPassword.length > 0){
+                    user.password = req.body.newPassword;
+                }
+                user.save((error, msg) => {
+                    if(error){
+                        return res.status(403).json({error: "Failed to save changes! Try again."});
+                    }
+                    res.json({success: "Saved profile changes!"});
+                });
             }
             else{
-                res.json({user: newUser});
+                return res.status(403).json({error: "Incorrect password! Could not save changes!"});
             }
         });
     });

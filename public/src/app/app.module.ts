@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { ValidUrlDirective } from './shared/url.validator';
+import { ValidEmailDirective } from './shared/email.validator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,8 @@ import { GameService } from './game.service';
     SettingsComponent,
     NavComponent,
     SearchComponent,
-    ValidUrlDirective
+    ValidUrlDirective,
+    ValidEmailDirective
   ],
   imports: [
     BrowserModule,

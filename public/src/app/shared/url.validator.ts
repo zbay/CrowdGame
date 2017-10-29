@@ -4,9 +4,8 @@ import { NG_VALIDATORS, Validator, AbstractControl, FormControl } from "@angular
 function validateUrlFactory() {
     return (c: FormControl) => {
         const urlRegex = /^(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png|jpeg)$/;
-        console.log(c.value + ": " + urlRegex.test(c.value));
         return (urlRegex.test(c.value)) ? null : {
-        validateUrl: {
+        validEmail: {
           valid: false
         }
       };
@@ -14,7 +13,7 @@ function validateUrlFactory() {
   }
 
 @Directive({
-    selector: '[validateUrl][ngModel], [validateUrl][FormControl]',
+    selector: '[validUrl][ngModel], [validUrl][FormControl]',
     providers: [{provide: NG_VALIDATORS, useExisting: forwardRef(() => ValidUrlDirective), multi: true}]
   })
   export class ValidUrlDirective implements Validator {

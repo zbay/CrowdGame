@@ -15,3 +15,10 @@
 .error{
     color:red;
 }
+.success{
+    color:green;
+}
+legend{
+    font-weight:bold;
+    font-size:120%;
+}
