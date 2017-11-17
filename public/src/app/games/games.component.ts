@@ -21,7 +21,6 @@ export class GamesComponent implements OnInit {
       else{
         this._gameService.getOpenGames((data) => {
           this.games = data.games;
-          console.log(this.games);
         }, () => {});
       }
     }, ()=>{}); 

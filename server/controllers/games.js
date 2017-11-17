@@ -79,10 +79,10 @@ module.exports = {
             res.json({success: "Game join processed!"});
         });
     },
-    getGame: function(){
-        Game.findOneById(req.params.id, (err, game) => {
+    getGame: function(req, res){
+        Game.findById(req.params.id).exec(function(err, game){
             if(err){
-                return res.status(500).json("Server error. Could not join the game!");
+                return res.status(500).json("Server error. Could not load this game!");
             }
             res.json({game: game});
         });

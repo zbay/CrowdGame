@@ -19,6 +19,7 @@ import { SearchComponent } from './search/search.component';
 
 import { LoginService } from './login.service';
 import { GameService } from './game.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { GameService } from './game.service';
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService, GameService],
+  providers: [LoginService, GameService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

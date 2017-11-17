@@ -5,13 +5,15 @@ import { SettingsComponent } from './settings/settings.component';
 import { GamesComponent } from './games/games.component';
 import { GameComponent } from './game/game.component';
 import { NewgameComponent } from './newgame/newgame.component';
+import { AuthGuard } from './auth-guard.service';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: LandingComponent},
-  {path: 'settings', pathMatch: 'full', component: SettingsComponent},
-  {path: 'games', pathMatch: 'full', component: GamesComponent},
-  {path: 'new', pathMatch: 'full', component: NewgameComponent},
-  {path: 'games/:id', pathMatch: 'full', component: GameComponent}
+  {path: 'settings', pathMatch: 'full', component: SettingsComponent, canActivate: [AuthGuard]},
+  {path: 'games', pathMatch: 'full', component: GamesComponent, canActivate: [AuthGuard]},
+  {path: 'new', pathMatch: 'full', component: NewgameComponent, canActivate: [AuthGuard]},
+  {path: 'games/:id', pathMatch: 'full', component: GameComponent, canActivate: [AuthGuard]},
+  {path: '**', component: LandingComponent},     
 ];
 
 @NgModule({

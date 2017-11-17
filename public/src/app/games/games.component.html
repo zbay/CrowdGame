@@ -1,7 +1,8 @@
 <app-nav></app-nav>
 {{games | json}}
 <div class="game" *ngFor="let game of games">
-    <h2>{{game.name}}</h2>
+    <h2>
+        <a href="/games/{{game._id}}">{{game.name}}</a></h2>
     <div>
         <h3>Where:</h3>
         {{game.location}}

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game',
@@ -8,13 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+  game: Object = {name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?", location: "N/A", size: 0};
+  gameID: String;
 
-  constructor(private _router: Router, private _loginService: LoginService) { }
+  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) { 
+    this._route.paramMap.subscribe(params => {
+      this.gameID = params.get('id');
+    });
+  }
   
     ngOnInit() {
       this._loginService.getMe((data) => {
         if(!data.user.email){
           this._router.navigate(['/']);
+        }
+        else{
+          this._gameService.getGame(this.gameID, (data) => {
+            this.game = data.game;
+            console.log(this.game);
+          }, () => {});
         }
       }, () => {}); 
     }
