@@ -1,2 +1,25 @@
 <app-nav></app-nav>
 {{games | json}}
+<div class="game" *ngFor="let game of games">
+    <h2>{{game.name}}</h2>
+    <div>
+        <h3>Where:</h3>
+        {{game.location}}
+    </div>
+    <div>
+        <h3>When:</h3>
+        {{game.time}}
+    </div>
+    <div>
+        <h3>Details:</h3>
+        {{game.details}}
+    </div>
+    <div>
+        <h3>Host:</h3>
+        {{game.creator.firstName}} {{game.creator.lastName}}
+    </div>
+    <div>
+        <h3>Players:</h3>
+         {{game.players.length}} / {{game.size}}
+    </div>
+</div>

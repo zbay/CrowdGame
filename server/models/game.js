@@ -8,7 +8,7 @@ const GameSchema = new mongoose.Schema({
     },
     details: {
         type: String,
-        required: [true, "A description is required!"]
+        required: false
     },
     size: {
         type: Number,
@@ -27,8 +27,7 @@ const GameSchema = new mongoose.Schema({
         default: true
     },
     creator: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
+        type: Object,
         required: [true, "A game must have a creator!"]
     },
     players: [{

@@ -19,8 +19,9 @@ export class GamesComponent implements OnInit {
         this._router.navigate(['/']);
       }
       else{
-        this._gameService.getOpenGames((games) => {
-          this.games = games
+        this._gameService.getOpenGames((data) => {
+          this.games = data.games;
+          console.log(this.games);
         }, () => {});
       }
     }, ()=>{}); 

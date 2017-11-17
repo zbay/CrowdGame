@@ -11,7 +11,9 @@ module.exports = {
             if(users.length === 0){
                 return res.status(403).json({error: "Not logged in! Cannot create a game."});
             }
-            req.body.creator = req.session.user_id;
+            console.log(users);
+            let userObj = {"_id": users[0]._id, "firstName": users[0].firstName, "lastName": users[0].lastName};
+            req.body.creator = userObj;
             req.body.members = [req.session.user_id];
             let newGame = new Game(req.body);
             newGame.save((err2, msg) => {

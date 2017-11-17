@@ -59,7 +59,6 @@ let self = module.exports = {
                     bcrypt.compare(req.body.password, user.password, function(err, matched){
                         if(matched){
                             req.session.user_id = user._id;
-                            console.log(req.session.user_id);
                             user.strikes = 0;
                             user.save((error, msg) => {
                                 res.json({success: "Logged in correctly!"});
@@ -82,7 +81,6 @@ let self = module.exports = {
             return res.status(500).json({error: "Server error. Could not retrieve user"});
         }
         else{
-            console.log("me id: " + req.session.user_id);
             let trimmedUser = {firstName: user.firstName, lastName: user.lastName, email: user.email, imgURL: user.imgURL};
             res.json({user: trimmedUser});
         }
