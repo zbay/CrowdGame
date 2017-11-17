@@ -21,7 +21,7 @@
       <input type="text" name="time" [(ngModel)] = "game.time" #time="ngModel" required />
     </div>
 
-    <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please specify an approximate game time!</div>
+    <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">Please specify an approximate game time!</div>
 
     <div class="form-group">
       <label for="details">Details:</label>
