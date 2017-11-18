@@ -20,6 +20,7 @@ import { SearchComponent } from './search/search.component';
 import { LoginService } from './login.service';
 import { GameService } from './game.service';
 import { AuthGuard } from './auth-guard.service';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuard } from './auth-guard.service';
     NavComponent,
     SearchComponent,
     ValidUrlDirective,
-    ValidEmailDirective
+    ValidEmailDirective,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

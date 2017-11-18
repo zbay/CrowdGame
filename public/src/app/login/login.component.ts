@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
     this._loginService.login(this.user, this.goBrowse.bind(this), this.showError.bind(this)); 
   }
 
-  goBrowse(user){
-    console.log(user);
+  goBrowse(data){
+    console.log(data);
     this._router.navigate(['/games']);
   }
 

@@ -5,31 +5,41 @@ const User = mongoose.model('User');
 
 let self = module.exports = {
   newUser: function(req, res) {
-      User.find({email: req.body.email}).exec(function(error, user){
-        if(user.length > 0){
-            return res.status(403).json({error: "The email you last submitted is already in the system."});
+      let is_admin = false;
+      User.find({}).exec(function(firstError, users){
+        if(firstError){
+            return res.status(500).json(err);
         }
-        if(error){
-          return res.status(500).json(err);
+        if(users.length === 0){
+            is_admin = true; // make user an admin if they're the first user
         }
-        else{  
-            let newUser = new User(req.body);
-            newUser.save(function saveUser(err, user){
-                if(err || (req.body.password !== req.body.passwordConfirmation)){
-                    if((req.body.password !== req.body.passwordConfirmation) || req.body.password.length < 8){
-                        return res.status(403).json({error: "Password error! Make sure they're long enough and that they match!"});
+        User.find({email: req.body.email}).exec(function(error, user){
+            if(user.length > 0){
+                return res.status(403).json({error: "The email you last submitted is already in the system."});
+            }
+            if(error){
+              return res.status(500).json(err);
+            }
+            else{  
+                req.body.is_admin = is_admin;
+                let newUser = new User(req.body);
+                newUser.save(function saveUser(err, user){
+                    if(err || (req.body.password !== req.body.passwordConfirmation)){
+                        if((req.body.password !== req.body.passwordConfirmation) || req.body.password.length < 8){
+                            return res.status(403).json({error: "Password error! Make sure they're long enough and that they match!"});
+                        }
+                        else{
+                          console.log(err);
+                          return res.status(403).json({error: "Failed to save new user to database! Try again!"});
+                        }
                     }
                     else{
-                      console.log(err);
-                      return res.status(403).json({error: "Failed to save new user to database! Try again!"});
+                        req.session.user_id = user.id;
+                        res.json({success: "You saved a new user!"});
                     }
-                }
-                else{
-                    req.session.user_id = user.id;
-                    res.json({success: "You saved a new user!"});
-                }
-            });
-        }
+                });
+            }
+          });
       });
   },
   login: function(req, res){

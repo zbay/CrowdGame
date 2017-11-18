@@ -19,16 +19,10 @@ export class GameComponent implements OnInit {
   }
   
     ngOnInit() {
-      this._loginService.getMe((data) => {
-        if(!data.user.email){
-          this._router.navigate(['/']);
-        }
-        else{
-          this._gameService.getGame(this.gameID, (data) => {
-            this.game = data.game;
-            console.log(this.game);
-          }, () => {});
-        }
-      }, () => {}); 
+      this._gameService.getGame(this.gameID, (data) => {
+        this.game = data.game;
+      }, () => {});
     }
 }
+
+// categories: Sport, In-Person Game, Online Game, Activism

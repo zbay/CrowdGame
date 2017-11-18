@@ -38,11 +38,15 @@ const UserSchema = new mongoose.Schema({
                     const urlRegex = /^(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)$/;
                     return urlRegex.test(address);
                 },
-                message: "Please enter a valid image URL (ending with .jpg, .png, or .gif)!"
+                message: "Please enter a valid image URL (ending with .jpg, .jpeg, .png, or .gif)!"
             }
         ]},
     games_created: [{type: Schema.Types.ObjectId, ref: 'Game'}],
     games_joined: [{type: Schema.Types.ObjectId, ref: 'Game'}],
+    is_admin: {
+        type: Boolean,
+        defualt: false
+    },
     last_login_attempt: {type: Number}, // minutes since 1/1/1970
     strikes: {type: Number, default: 0}
 });

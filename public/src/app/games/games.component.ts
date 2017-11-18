@@ -14,16 +14,10 @@ export class GamesComponent implements OnInit {
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) { }
 
   ngOnInit() {
-    this._loginService.getMe((data) => {
-      if(!data.user.email){
-        this._router.navigate(['/']);
-      }
-      else{
+      console.log("games init");
         this._gameService.getOpenGames((data) => {
           this.games = data.games;
         }, () => {});
-      }
-    }, ()=>{}); 
   }
 
 }
