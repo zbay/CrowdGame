@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = mongoose.model('User');
-//const moment = require('moment');
+const createToken = require('../util/token');
 
 let self = module.exports = {
   newUser: function(req, res) {
@@ -23,7 +23,7 @@ let self = module.exports = {
             else{  
                 req.body.is_admin = is_admin;
                 let newUser = new User(req.body);
-                newUser.save(function saveUser(err, user){
+                newUser.save(function saveUser(err, savedUser){
                     if(err || (req.body.password !== req.body.passwordConfirmation)){
                         if((req.body.password !== req.body.passwordConfirmation) || req.body.password.length < 8){
                             return res.status(403).json({error: "Password error! Make sure they're long enough and that they match!"});
@@ -34,8 +34,8 @@ let self = module.exports = {
                         }
                     }
                     else{
-                        req.session.user_id = user.id;
-                        res.json({success: "You saved a new user!"});
+                        req.session.user_id = savedUser.id;
+                        res({token: createToken(savedUser)});
                     }
                 });
             }

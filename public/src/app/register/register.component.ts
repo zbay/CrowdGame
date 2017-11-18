@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
     this._loginService.register(this.user, this.goBrowse.bind(this), this.showError.bind(this));
   }
 
-  goBrowse(user){
+  goBrowse(response){
     this._router.navigate(['/games']);
   }
 

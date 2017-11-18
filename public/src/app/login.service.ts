@@ -12,8 +12,9 @@ export class LoginService {
     return this._http.post("/api/user", data)
       .map(response => response.json())
       .toPromise()
-      .then((user) => {
-        successCallback(user);
+      .then((response) => {
+        localStorage.setItem('token', response.token);
+        successCallback(response);
       })
       .catch((err) => {
         failCallback(err);
@@ -24,9 +25,10 @@ export class LoginService {
     return this._http.post("/api/login", data)
     .map(response => response.json())
     .toPromise()
-    .then((user) => {
-      console.log(user);
-      successCallback(user);
+    .then((response) => {
+      localStorage.setItem('token', response.token);
+      console.log(response);
+      successCallback(response);
     })
     .catch((err) => {
       console.log(err);
