@@ -1,6 +1,6 @@
 'use strict';
 
-const secret = process.env.JWT_KEY;
+const secret = process.env.JWT_SECRET;
 const jwt = require('jsonwebtoken');
 
 function createToken(user) {
@@ -11,7 +11,6 @@ function createToken(user) {
   if (user.is_admin) {
     scope = 'admin';
   }
-
   // Sign the JWT
   return jwt.sign(
     {

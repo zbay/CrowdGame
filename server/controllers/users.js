@@ -35,7 +35,7 @@ let self = module.exports = {
                     }
                     else{
                         req.session.user_id = savedUser.id;
-                        res({token: createToken(savedUser)});
+                        return res.json({token: createToken(savedUser)});
                     }
                 });
             }
@@ -71,7 +71,7 @@ let self = module.exports = {
                             req.session.user_id = user._id;
                             user.strikes = 0;
                             user.save((error, msg) => {
-                                res.json({success: "Logged in correctly!"});
+                                return res.json({token: createToken(matched)});
                             });
                         }
                         else{
@@ -127,12 +127,5 @@ let self = module.exports = {
             }
         });
     });
-  },
-  logout: function(req, res){
-    self.reset_session(req);
-    res.json({success: "Logged out!"});
-  },
-  reset_session: function(req){
-    req.session.user_id = false;
   }
   }

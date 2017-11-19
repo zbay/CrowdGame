@@ -9,9 +9,6 @@ module.exports = function(app) {
     app.post("/api/login", (req, res) => { // login attempt
         users.login(req, res);
     });
-    app.get("/api/logout", (req, res) => { // log out
-        users.logout(req, res);
-    });
     app.post("/api/settings", (req, res) => { // edit user profile
         users.editMe(req, res);
     });

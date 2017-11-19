@@ -12,12 +12,9 @@ export class LandingComponent implements OnInit {
   constructor(private _router: Router, private _loginService: LoginService) {}
 
   ngOnInit() {
-    this._loginService.getMe((data) => {
-      if(data.user.email){
-        this._router.navigate(['/games']);
-      }
-    },
-  ()=>{}); 
+    if(this._loginService.isLoggedIn){
+      this._router.navigate(['/games']);
+    }
   }
 
 }
