@@ -15,10 +15,6 @@ module.exports = {
             req.body.creator = userObj;
             req.body.players = [req.body.jwt_user_id];
             let newGame = new Game(req.body);
-            console.log(req.body);
-            /*if(req.body.size < 2){
-                return res.status(500).json({error: "Server error! Could not save the game."});
-            }*/
             newGame.save((err2, msg) => {
                 if(err2){
                     return res.status(500).json({error: "Server error! Could not save the game."});
@@ -30,11 +26,18 @@ module.exports = {
         });
     },
     deleteGame: function(req, res){
-        Game.findOneAndRemove({_id: req.params.gameID, creator: req.body.jwt_user_id}, (error, msg) => {
-            if(error){
+        Game.findById(req.params.gameID, (error, game) => {
+            if(error || game.creator._id != req.body.jwt_user_id){
                 return res.status(500).json({error: "Server error. Could not delete this game!"});
             }
-            res.json({success: "Game deleted!"});
+            else{
+                Game.findByIdAndRemove(req.params.gameID, (err, msg) => {
+                    if(err){
+                        return res.status(500).json({error: "Server error. Could not delete this game!"});
+                    }
+                    res.json({success: "Game deleted!"});
+                });
+            }
         });
     },
     getOpenGames: function(req, res){

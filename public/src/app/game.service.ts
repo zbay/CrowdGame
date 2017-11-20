@@ -57,8 +57,8 @@ export class GameService {
     });
   }
 
-  deleteGame(id, successCallback, failCallback){
-    return this._authHttp.delete("/api/game/" + id)
+  deleteGame(data, successCallback, failCallback){
+    return this._authHttp.delete("/api/game/" + data.gameID)
     .map(response => response.json())
     .toPromise()
     .then((user) => {

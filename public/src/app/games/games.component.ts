@@ -39,12 +39,11 @@ export class GamesComponent implements OnInit {
         }
       }
     }, ()=> {
-      this.joinErr = "Failed to join this game! Maybe it was closed or deleted.";
+      this.joinErr = "Failed to join game! Maybe it was closed or deleted.";
     });
   }
 
   leaveGame(gameID){
-    console.log("Deleting: " + gameID);
     this._gameService.leaveGame({gameID: gameID}, () => {
       this.joinErr = undefined;
       for(let i = 0; i < this.games.length; i++){ // quit the game without reloading from the server
@@ -58,8 +57,23 @@ export class GamesComponent implements OnInit {
       }
       }
     }, ()=> {
-      this.joinErr = "Failed to leave this game! Maybe it was deleted.";
+      this.joinErr = "Failed to leave game! Maybe it was deleted.";
     });
+  }
+
+  deleteGame(gameID){
+    this._gameService.deleteGame({gameID: gameID}, () =>{
+      this.joinErr = undefined;
+      // delete game without reloading from server
+      for(let i = 0; i < this.games.length; i++){
+        if(gameID === this.games[i]._id){
+          this.games.splice(i, 1);
+        }
+      }
+    },
+  () => {
+    this.joinErr = "Failed to delete game! Are you logged in?";
+  });
   }
 
 }

@@ -1,5 +1,6 @@
 <app-nav></app-nav>
 {{games | json}}
+<div *ngIf="joinErr">{{joinErr}}</div>
 <div class="game" *ngFor="let game of games">
     <div class="col col-3">
         <h2>
@@ -16,12 +17,14 @@
     <div class="col col-2">
         <p>Players:</p>
         <p>{{game.players.length}} / {{game.size}}</p>
-        <div *ngIf="joinErr">{{joinErr}}</div>
         <form #form="ngForm" (submit)="joinGame(game._id)" *ngIf="game.players.indexOf(user_id) === -1">
-            <input type="Submit" value="Join This Game"/>
+            <input type="submit" value="Join This Game"/>
         </form>
         <form #form="ngForm" (submit)="leaveGame(game._id)" *ngIf="game.players.indexOf(user_id) > -1">
-            <input type="Submit" value="Leave This Game"/>
+            <input type="submit" value="Leave This Game"/>
+        </form>
+        <form #form="ngForm" (submit)="deleteGame(game._id)" *ngIf="game.creator._id === user_id">
+            <input type="submit" value="Delete This Game"/>
         </form>
     </div>
 </div>

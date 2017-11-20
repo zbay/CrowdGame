@@ -41,7 +41,7 @@ module.exports = function(app) {
     app.get("/api/game/:id", hasJWT, (req, res) => { // get a game by id
         games.getGame(req, res);
     });
-    app.delete("/api/game/:id", hasJWT, (req, res) => { // delete a game
+    app.delete("/api/game/:gameID", hasJWT, (req, res) => { // delete a game
         games.deleteGame(req, res);
     });
     app.post("/api/editGame", hasJWT, (req, res) => { // save changes to a game
