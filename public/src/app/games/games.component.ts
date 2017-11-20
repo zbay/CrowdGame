@@ -19,6 +19,7 @@ export class GamesComponent implements OnInit {
       console.log("games init");
         this._gameService.getOpenGames((data) => {
           this.games = data.games;
+          console.log(this.games);
           this.user_id = this._loginService.getDecodedToken().sub;
         }, () => {
           this.redirect.bind(this);
@@ -73,6 +74,21 @@ export class GamesComponent implements OnInit {
     },
   () => {
     this.joinErr = "Failed to delete game! Are you logged in?";
+  });
+  }
+
+  closeGame(gameID){
+    this._gameService.closeGame({gameID: gameID}, () =>{
+      this.joinErr = undefined;
+      // remove game from list without reloading from server
+      for(let i = 0; i < this.games.length; i++){
+        if(gameID === this.games[i]._id){
+          this.games.splice(i, 1);
+        }
+      }
+    },
+  () => {
+    this.joinErr = "Failed to close game! Are you logged in?";
   });
   }
 

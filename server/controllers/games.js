@@ -57,11 +57,18 @@ module.exports = {
         });
     },
     closeGame: (req, res) => {
-        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.body.jwt_user_id}, {$set: {open: false}}, (error, msg) => {
-            if(error){
+        Game.findById(req.params.gameID, (error, game) => {
+            if(error || game.creator._id != req.body.jwt_user_id){
                 return res.status(500).json({error: "Server error. Could not close this game!"});
             }
-            res.json({success: "Game closed!"});
+            else{
+                Game.findOneAndUpdate({_id: req.params.gameID}, {$set: {open: false}}, (err, msg) => {
+                    if(err){
+                        return res.status(500).json({error: "Server error. Could not close this game!"});
+                    }
+                    res.json({success: "Game closed!"});
+                });
+            }
         });
     },
     editGame: function(req, res){

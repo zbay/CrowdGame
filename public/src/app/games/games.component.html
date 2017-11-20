@@ -2,29 +2,75 @@
 {{games | json}}
 <div *ngIf="joinErr">{{joinErr}}</div>
 <div class="game" *ngFor="let game of games">
-    <div class="col col-3">
-        <h2>
-            <a href="/games/{{game._id}}">{{game.name}}</a>
-        </h2>
-        <img [src]="game.creator.imgURL"/>
-        <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
+    <div *ngIf="!game.editing">
+            <div class="col col-3">
+                    <h2>
+                        <a href="/games/{{game._id}}">{{game.name}}</a>
+                    </h2>
+                    <img [src]="game.creator.imgURL"/>
+                    <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
+                </div>
+                <div class="col col-6">
+                    <p>When: {{game.time}}</p>
+                    <p>Where: {{game.location}}</p>
+                    <p>Details: {{game.details}}</p>
+                </div>
+                <div class="col col-2">
+                    <p>Players:</p>
+                    <p>{{game.players.length}} / {{game.size}}</p>
+                    <form #form="ngForm" (submit)="joinGame(game._id)" *ngIf="game.players.indexOf(user_id) === -1">
+                        <input type="submit" value="Join This Game"/>
+                    </form>
+                    <form #form="ngForm" (submit)="leaveGame(game._id)" *ngIf="game.players.indexOf(user_id) > -1">
+                        <input type="submit" value="Leave This Game"/>
+                    </form>
+                    <div *ngIf="game.creator._id === user_id">
+                        <form #form="ngForm" (submit)="deleteGame(game._id)">
+                            <input type="submit" value="Delete This Game"/>
+                        </form>
+                        <form #form="ngForm" (submit)="closeGame(game._id)">
+                            <input type="submit" value="Close This Game"/>
+                        </form>
+                        <form #form="ngForm" (submit)="game.editing = true">
+                            <input type="submit" value="Edit This Game"/>
+                        </form>
+                    </div>
+                </div>
     </div>
-    <div class="col col-6">
-        <p>When: {{game.time}}</p>
-        <p>Where: {{game.location}}</p>
-        <p>Details: {{game.details}}</p>
-    </div>
-    <div class="col col-2">
-        <p>Players:</p>
-        <p>{{game.players.length}} / {{game.size}}</p>
-        <form #form="ngForm" (submit)="joinGame(game._id)" *ngIf="game.players.indexOf(user_id) === -1">
-            <input type="submit" value="Join This Game"/>
-        </form>
-        <form #form="ngForm" (submit)="leaveGame(game._id)" *ngIf="game.players.indexOf(user_id) > -1">
-            <input type="submit" value="Leave This Game"/>
-        </form>
-        <form #form="ngForm" (submit)="deleteGame(game._id)" *ngIf="game.creator._id === user_id">
-            <input type="submit" value="Delete This Game"/>
-        </form>
+    <div *ngIf="game.editing">
+        <h1>EDITING!!!</h1>
+            <div class="col col-3">
+                    <h2>
+                        <a href="/games/{{game._id}}">{{game.name}}</a>
+                    </h2>
+                    <img [src]="game.creator.imgURL"/>
+                    <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
+                </div>
+                <div class="col col-6">
+                    <p>When: {{game.time}}</p>
+                    <p>Where: {{game.location}}</p>
+                    <p>Details: {{game.details}}</p>
+                </div>
+                <div class="col col-2">
+                    <p>Players:</p>
+                    <p>{{game.players.length}} / {{game.size}}</p>
+                    <form #form="ngForm" (submit)="joinGame(game._id)" *ngIf="game.players.indexOf(user_id) === -1">
+                        <input type="submit" value="Join This Game"/>
+                    </form>
+                    <form #form="ngForm" (submit)="leaveGame(game._id)" *ngIf="game.players.indexOf(user_id) > -1">
+                        <input type="submit" value="Leave This Game"/>
+                    </form>
+                    <div *ngIf="game.creator._id === user_id">
+                        <form #form="ngForm" (submit)="deleteGame(game._id)">
+                            <input type="submit" value="Delete This Game"/>
+                        </form>
+                        <form #form="ngForm" (submit)="closeGame(game._id)">
+                            <input type="submit" value="Close This Game"/>
+                        </form>
+                        <form #form="ngForm" (submit)="game.editing = false">
+                            <input type="submit" value="Save This Game"/>
+                        </form>
+                    </div>
+                </div>
     </div>
 </div>

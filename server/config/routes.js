@@ -47,7 +47,7 @@ module.exports = function(app) {
     app.post("/api/editGame", hasJWT, (req, res) => { // save changes to a game
         games.editGame(req, res);
     });
-    app.post("/api/close/:id", hasJWT, (req, res) => { // close game
+    app.post("/api/close/:gameID", hasJWT, (req, res) => { // close game
         games.closeGame(req, res);
     });
     app.post("/api/join", hasJWT, (req, res) => { // join a gmae

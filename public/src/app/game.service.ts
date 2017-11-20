@@ -82,7 +82,7 @@ export class GameService {
   }
 
   closeGame(data, successCallback, failCallback){
-    return this._authHttp.post("/api/close", data)
+    return this._authHttp.post("/api/close/" + data.gameID, {})
     .map(response => response.json())
     .toPromise()
     .then((user) => {
