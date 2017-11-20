@@ -31,6 +31,6 @@ export class NewgameComponent implements OnInit {
   }
 
   showErrors(err){
-    this.errorMsg = err;
+    this.errorMsg = JSON.parse(err._body).error;
   }
 }

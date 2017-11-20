@@ -97,8 +97,20 @@ export class GameService {
     return this._authHttp.post("/api/join", data)
     .map(response => response.json())
     .toPromise()
-    .then((user) => {
-      successCallback(user);
+    .then((response) => {
+      successCallback(response);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });
+  }
+
+  leaveGame(data, successCallback, failCallback){
+    return this._authHttp.post("/api/leave", data)
+    .map(response => response.json())
+    .toPromise()
+    .then((response) => {
+      successCallback(response);
     })
     .catch((err) => {
       failCallback(err);

@@ -35,9 +35,9 @@
       <input type="number" name="size" step="1" [(ngModel)]="game.size" #size="ngModel" required min="2" />
     </div>
 
-    <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please specify a valid number of players!</div>
+    <div class="error" *ngIf="(size.errors && (size.touched || size.dirty)) || game.size < 2">Please specify a valid number of players!</div>
 
-    <input type="submit" value="Post Game" [disabled]="form.invalid"/>
+    <input type="submit" value="Post Game" [disabled]="form.invalid && game.size < 2"/>
 
     <div class="error" *ngIf="errorMsg">{{errorMsg}}</div>
   </fieldset>

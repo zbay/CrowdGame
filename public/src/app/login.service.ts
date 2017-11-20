@@ -78,6 +78,10 @@ export class LoginService {
     return localStorage.getItem("token");
   }
 
+  getDecodedToken(){
+    return jwtDecode(this.getToken());
+  }
+
   isAdmin(): boolean{
     return jwtDecode(this.getToken()).scope.charAt("admin") > -1;
   }

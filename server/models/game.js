@@ -12,6 +12,7 @@ const GameSchema = new mongoose.Schema({
     },
     size: {
         type: Number,
+        min: [2, "A game must have at least two players!"],
         required: [true, "A game size is required!"]
     },
     location: {

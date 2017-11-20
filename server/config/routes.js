@@ -38,7 +38,7 @@ module.exports = function(app) {
     app.get("/api/myGames", hasJWT, (req, res) => { // get all games that the user is involved in
         games.getMyGames(req, res);
     });
-    app.get("/api/game/:id", hasJWT, (req, res) => {
+    app.get("/api/game/:id", hasJWT, (req, res) => { // get a game by id
         games.getGame(req, res);
     });
     app.delete("/api/game/:id", hasJWT, (req, res) => { // delete a game
@@ -53,7 +53,10 @@ module.exports = function(app) {
     app.post("/api/join", hasJWT, (req, res) => { // join a gmae
         games.joinGame(req, res);
     });
-    app.all("*", (req, res, next) => { // front-end routing
+    app.post("/api/leave", hasJWT, (req, res) => { // leave a gmae
+        games.leaveGame(req, res);
+    });
+    app.all("*", (req, res, next) => { // defer to front-end routing
         res.sendFile(path.resolve("./public/dist/index.html"))
     });
 }

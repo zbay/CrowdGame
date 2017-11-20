@@ -34,7 +34,7 @@ export class SettingsComponent implements OnInit {
     }
 
     redirect(){
-      this._router.navigate(['/'])
+      this._router.navigate(['/']);
     }
 
     showError(err){

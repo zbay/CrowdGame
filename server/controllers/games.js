@@ -11,11 +11,14 @@ module.exports = {
             if(users.length === 0){
                 return res.status(403).json({error: "Not logged in! Cannot create a game."});
             }
-            console.log(users);
-            let userObj = {"_id": users[0]._id, "firstName": users[0].firstName, "lastName": users[0].lastName, "imgUrl": users[0].imgUrl};
+            let userObj = {"_id": users[0]._id, "firstName": users[0].firstName, "lastName": users[0].lastName, "imgURL": users[0].imgURL};
             req.body.creator = userObj;
             req.body.players = [req.body.jwt_user_id];
             let newGame = new Game(req.body);
+            console.log(req.body);
+            /*if(req.body.size < 2){
+                return res.status(500).json({error: "Server error! Could not save the game."});
+            }*/
             newGame.save((err2, msg) => {
                 if(err2){
                     return res.status(500).json({error: "Server error! Could not save the game."});
@@ -77,6 +80,14 @@ module.exports = {
                 return res.status(500).json("Server error. Could not join the game!");
             }
             res.json({success: "Game join processed!"});
+        });
+    },
+    leaveGame: function(req, res){
+        Game.findByIdAndUpdate({_id: req.body.gameID}, {$pull: {players: req.body.jwt_user_id}}, (err, msg) => {
+            if(err){
+                return res.status(500).json("Server error. Could not leave the game!");
+            }
+            res.json({success: "Game departure processed!"});           
         });
     },
     getGame: function(req, res){
