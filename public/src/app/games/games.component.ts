@@ -44,13 +44,18 @@ export class GamesComponent implements OnInit {
   }
 
   leaveGame(gameID){
+    console.log("Deleting: " + gameID);
     this._gameService.leaveGame({gameID: gameID}, () => {
       this.joinErr = undefined;
       for(let i = 0; i < this.games.length; i++){ // quit the game without reloading from the server
         if(gameID === this.games[i]._id){
-          this.games[i].players.splice(i, 1);
-          break;
-        }
+          for(let j = 0; j < this.games[i].players.length; j++){
+            if(this.games[i].players[j] === this.user_id){
+              this.games[i].players.splice(j, 1);
+              break;
+            }
+          }
+      }
       }
     }, ()=> {
       this.joinErr = "Failed to leave this game! Maybe it was deleted.";
