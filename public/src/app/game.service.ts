@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class GameService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: Http, private _authHttp: AuthHttp) { }
 
   getOpenGames(successCallback, failCallback){
-    return this._http.get("/api/openGames")
+    return this._authHttp.get("/api/openGames")
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -21,7 +22,7 @@ export class GameService {
   }
 
   getGame(id, successCallback, failCallback){
-    return this._http.get("/api/game/" + id)
+    return this._authHttp.get("/api/game/" + id)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -33,7 +34,7 @@ export class GameService {
   }
 
   newGame(data, successCallback, failCallback){
-    return this._http.post("/api/newGame", data)
+    return this._authHttp.post("/api/newGame", data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -45,7 +46,7 @@ export class GameService {
   }
 
   getMyGames(successCallback, failCallback){
-    return this._http.get("/api/myGames")
+    return this._authHttp.get("/api/myGames")
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -57,7 +58,7 @@ export class GameService {
   }
 
   deleteGame(id, successCallback, failCallback){
-    return this._http.delete("/api/game/" + id)
+    return this._authHttp.delete("/api/game/" + id)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -69,7 +70,7 @@ export class GameService {
   }
 
   editGame(data, successCallback, failCallback){
-    return this._http.get("/api/editGame", data)
+    return this._authHttp.get("/api/editGame", data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -81,7 +82,7 @@ export class GameService {
   }
 
   closeGame(data, successCallback, failCallback){
-    return this._http.post("/api/close", data)
+    return this._authHttp.post("/api/close", data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -93,7 +94,7 @@ export class GameService {
   }
 
   joinGame(data, successCallback, failCallback){
-    return this._http.post("/api/join", data)
+    return this._authHttp.post("/api/join", data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {

@@ -4,7 +4,7 @@ const Game = mongoose.model('Game');
 
 module.exports = {
     newGame: function(req, res){
-        User.find({_id: req.session.user_id}).exec(function(err, users){
+        User.find({_id: req.body.jwt_user_id}).exec(function(err, users){
             if(err){
                 return res.status(500).json({error: "Server error! Could not save the game."});
             }
@@ -14,7 +14,7 @@ module.exports = {
             console.log(users);
             let userObj = {"_id": users[0]._id, "firstName": users[0].firstName, "lastName": users[0].lastName, "imgUrl": users[0].imgUrl};
             req.body.creator = userObj;
-            req.body.members = [req.session.user_id];
+            req.body.players = [req.body.jwt_user_id];
             let newGame = new Game(req.body);
             newGame.save((err2, msg) => {
                 if(err2){
@@ -27,7 +27,7 @@ module.exports = {
         });
     },
     deleteGame: function(req, res){
-        Game.findOneAndRemove({_id: req.params.gameID, creator: req.session.user_id}, (error, msg) => {
+        Game.findOneAndRemove({_id: req.params.gameID, creator: req.body.jwt_user_id}, (error, msg) => {
             if(error){
                 return res.status(500).json({error: "Server error. Could not delete this game!"});
             }
@@ -43,7 +43,7 @@ module.exports = {
         });
     },
     getMyGames: function(req, res){
-        Game.find({creator: req.session.user_id}).sort({open: -1, created_at: -1}).exec((err, games) => {
+        Game.find({creator: req.body.jwt_user_id}).sort({open: -1, created_at: -1}).exec((err, games) => {
             if(err){
                 return res.status(500).json({error: "Could not load games."});
             }
@@ -51,7 +51,7 @@ module.exports = {
         });
     },
     closeGame: (req, res) => {
-        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.session.user_id}, {$set: {open: false}}, (error, msg) => {
+        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.body.jwt_user_id}, {$set: {open: false}}, (error, msg) => {
             if(error){
                 return res.status(500).json({error: "Server error. Could not close this game!"});
             }
@@ -60,7 +60,7 @@ module.exports = {
     },
     editGame: function(req, res){
         let game = req.body;
-        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.session.user_id}, 
+        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.body.jwt_user_id}, 
             {$set: 
                 {name: game.name, details: game.details, size: game.size, location: game.location, 
                 open: game.open}}, 
@@ -72,7 +72,7 @@ module.exports = {
             });
     },
     joinGame: function(req, res){
-        Game.findOneAndUpdate({_id: req.body.gameID, open: true}, {$push: {members: req.session.user_id}}, {upsert: true}, (err, msg) => {
+        Game.findOneAndUpdate({_id: req.body.gameID, open: true}, {$push: {players: req.body.jwt_user_id}}, {upsert: true}, (err, msg) => {
             if(err){
                 return res.status(500).json("Server error. Could not join the game!");
             }

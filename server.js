@@ -2,12 +2,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
-const session = require('express-session');
 require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public/dist')));
-app.use(session({secret: 'jfdlsaflksaj', resave: true, saveUninitialized: true}));
 
 require('./server/config/mongoose.js');
 

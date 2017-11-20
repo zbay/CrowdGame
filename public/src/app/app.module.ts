@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions, Http } from '@angular/http';
 import { ValidUrlDirective } from './shared/url.validator';
 import { ValidEmailDirective } from './shared/email.validator';
 
@@ -21,6 +21,13 @@ import { LoginService } from './login.service';
 import { GameService } from './game.service';
 import { AuthGuard } from './auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
+import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenGetter: () => { return localStorage.getItem('token'); }
+  }), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -44,7 +51,12 @@ import { AdminComponent } from './admin/admin.component';
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService, GameService, AuthGuard],
+  providers: [LoginService, GameService, AuthGuard, 
+  {
+    provide: AuthHttp,
+    useFactory: authHttpServiceFactory,
+    deps: [Http, RequestOptions]
+  }], // pass JWT token with every request
   bootstrap: [AppComponent]
 })
 export class AppModule { }

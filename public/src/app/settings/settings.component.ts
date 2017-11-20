@@ -24,15 +24,10 @@ export class SettingsComponent implements OnInit {
 
     getMe(){
       this._loginService.getMe((data) => {
-        if(!data || !data.user || !data.user.email){
-          this._router.navigate(['/']);
-        }
-        else{
           this.user = data.user;
           this.lastSavedImgURL = this.user.imgURL;
           this.user.currentPassword = "";
           this.user.newPassword = "";
-        }
         },
         this.redirect.bind(this)
       ); 

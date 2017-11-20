@@ -34,7 +34,6 @@ let self = module.exports = {
                         }
                     }
                     else{
-                        req.session.user_id = savedUser.id;
                         return res.json({token: createToken(savedUser)});
                     }
                 });
@@ -68,10 +67,9 @@ let self = module.exports = {
                 else{
                     bcrypt.compare(req.body.password, user.password, function(err, matched){
                         if(matched){
-                            req.session.user_id = user._id;
                             user.strikes = 0;
                             user.save((error, msg) => {
-                                return res.json({token: createToken(matched)});
+                                return res.json({token: createToken(user)});
                             });
                         }
                         else{
@@ -86,7 +84,7 @@ let self = module.exports = {
     });
   },
   getMe: function(req, res){
-    User.findOne({_id: req.session.user_id}).exec((err, user) => {
+    User.findOne({_id: req.body.jwt_user_id}).exec((err, user) => {
         if(err || !user || !user.firstName){
             return res.status(500).json({error: "Server error. Could not retrieve user"});
         }
@@ -97,7 +95,7 @@ let self = module.exports = {
     });
   },
   editMe: function(req, res){
-    User.find({_id: req.session.user_id}).exec((err, users) => {
+    User.find({_id: req.body.jwt_user_id}).exec((err, users) => {
         if(err){
             return res.status(500).json({error: "Server error. Could not query database for user!"});
         }

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired, AuthHttp } from 'angular2-jwt';
 import * as jwtDecode from 'jwt-decode';
 
 @Injectable()
 export class LoginService {
 
-  constructor(private _http: Http) { }
+  constructor(private _http: Http, private _authHttp: AuthHttp) { }
 
   register(data, successCallback, failCallback): Promise<void>{
     return this._http.post("/api/user", data)
@@ -39,7 +39,7 @@ export class LoginService {
   }
 
   editMe(data, successCallback, failCallback): Promise<void>{
-    return this._http.post("/api/settings", data)
+    return this._authHttp.post("/api/settings", data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -51,7 +51,7 @@ export class LoginService {
   }
 
   getMe(successCallback, failCallback): Promise<void>{
-    return this._http.get("/api/me")
+    return this._authHttp.get("/api/me")
     .map(response => response.json())
     .toPromise()
     .then((user) => {
@@ -68,8 +68,6 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean{
-    console.log(typeof localStorage.getItem("token"));
-    console.log(localStorage.getItem("token"));
     if(!localStorage.getItem("token")){
       return false;
     }
@@ -81,7 +79,7 @@ export class LoginService {
   }
 
   isAdmin(): boolean{
-    return jwtDecode(this.getToken()).scope === "admin";
+    return jwtDecode(this.getToken()).scope.charAt("admin") > -1;
   }
 
   getId(): string{
