@@ -25,3 +25,18 @@
           <input type="Submit" value="Leave This Game"/>
       </form>
   </div>
+  <div class="chatBox">
+      <div class="chatMessage" *ngFor="let comment of game.comments">
+          <div>
+            <span>{{comment.author}}</span>, <span>{{comment.createdAt}}</span>: 
+          </div>
+          <p>{{comment.message}}</p>
+      </div>
+      <form #form="ngForm" (submit)="newComment()">
+        <div class="form-group">
+            <label for="message">New Comment: </label>
+            <input type="text" name="message" [(ngModel)]="comment" required/>
+        </div>
+        <input type="submit" value="Post Comment" [disabled]="form.invalid"/>
+      </form>
+  </div>

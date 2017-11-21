@@ -12,11 +12,15 @@ import * as io from 'socket.io-client'
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  game = {_id: "", name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?", location: "N/A", size: 0, players: [], creator: {}};
+  game = {_id: "", name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?",
+    location: "N/A", size: 0, players: [], creator: {}, comments: []};
+  comment: "";
   gameID: String;
   joinErr;
   user_id: String;
+  user_name: String;
   socket;
+  commentErr;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) { 
     this.socket = io.connect();
@@ -32,7 +36,12 @@ export class GameComponent implements OnInit {
     ngOnInit() {
       this._gameService.getGame(this.gameID, (data) => {
         this.game = data.game;
-        this.user_id = this._loginService.getDecodedToken().sub;
+        let token = this._loginService.getDecodedToken();
+        this.user_id = token.sub;
+        this.user_name = token.name;
+        this.socket.on("newMessage", function(newComment){
+          this.game.comments.push(newComment);
+        }.bind(this));
       }, this.redirect.bind(this));
     }
 
@@ -57,7 +66,6 @@ export class GameComponent implements OnInit {
     }
   
     leaveGame(gameID){
-      console.log("Deleting: " + gameID);
       this._gameService.leaveGame({gameID: gameID}, () => {
         this.joinErr = undefined;
         if(gameID === this.game._id){
@@ -70,6 +78,15 @@ export class GameComponent implements OnInit {
         }
       }, ()=> {
         this.joinErr = "Failed to leave this game! Maybe it was deleted.";
+      });
+    }
+
+    newComment(){
+      this._gameService.newComment({comment: {message: this.comment, createdAt: Date.now(), author: this.user_name}}, this.game._id, (savedMsg) => {
+        this.commentErr = undefined;
+        this.socket.emit("newMessage", savedMsg, this.game._id);
+      }, ()=>{
+        this.commentErr = "Failed to save comment!";
       });
     }
 }

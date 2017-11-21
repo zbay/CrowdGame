@@ -117,4 +117,16 @@ export class GameService {
       failCallback(err);
     });
   }
+
+  newComment(data, gameID, successCallback, failCallback){
+    return this._authHttp.post("/api/game/" + gameID + "/comment", data)
+    .map(response => response.json())
+    .toPromise()
+    .then((response) => {
+      successCallback(response);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });
+  }
 }

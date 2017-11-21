@@ -17,6 +17,7 @@ function createToken(user) {
     {
       sub: user._id,
       email: user.email,
+      name: user.firstName + " " + user.lastName,
       scope: scope
     },
     secret,

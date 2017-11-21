@@ -57,13 +57,12 @@ module.exports = {
         });
     },
     saveComment: function(req, res){
-        // no jwt requirement?
+        // no jwt auth requirement?
         Game.findOneAndUpdate({_id: req.params.gameID}, {$push: {comments: req.body.comment}}, (err, msg) => {
             if(err){
                 return res.status(500).json({error: "Could not save comment!"});
             }
-            
-            res.json({success: "Saved comment!"});
+            res.json(req.body.comment);
         });
     },
     closeGame: (req, res) => {
@@ -83,7 +82,6 @@ module.exports = {
     },
     editGame: function(req, res){
         let game = req.body.game;
-        console.log(req.params.gameID);
         Game.findById(req.params.gameID, (error, msg) => {
             if(error || (game.creator._id != req.body.jwt_user_id)){
                 return res.status(500).json({error: "Server error. Could not edit this game!"});
@@ -94,7 +92,6 @@ module.exports = {
                     {runValidators: true},
                 (err, msg) => {
                     if(err){
-                        console.log("set error!");
                         console.log(error);
                         return res.status(500).json({error: "Server error. Could not edit this game!"});
                     }
