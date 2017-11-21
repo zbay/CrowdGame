@@ -72,17 +72,25 @@ module.exports = {
         });
     },
     editGame: function(req, res){
-        let game = req.body;
-        Game.findOneAndUpdate({_id: req.body.gameID, creator: req.body.jwt_user_id}, 
-            {$set: 
-                {name: game.name, details: game.details, size: game.size, location: game.location, 
-                open: game.open}}, 
-            (error, msg) => {
-                if(error){
-                    return res.status(500).json({error: "Server error. Could not edit this game!"});
-                }
-                res.json({success: "Game edits saved!"});
-            });
+        let game = req.body.game;
+        console.log(req.params.gameID);
+        Game.findById(req.params.gameID, (error, msg) => {
+            if(error || (game.creator._id != req.body.jwt_user_id)){
+                return res.status(500).json({error: "Server error. Could not edit this game!"});
+            }
+            Game.findOneAndUpdate({_id: req.params.gameID}, 
+                {$set: 
+                    {name: game.name, details: game.details, time: game.time, size: parseInt(game.size), location: game.location}}, 
+                    {runValidators: true},
+                (err, msg) => {
+                    if(err){
+                        console.log("set error!");
+                        console.log(error);
+                        return res.status(500).json({error: "Server error. Could not edit this game!"});
+                    }
+                    res.json({success: "Game edits saved!"});
+                });
+        });
     },
     joinGame: function(req, res){
         Game.findOneAndUpdate({_id: req.body.gameID, open: true}, {$push: {players: req.body.jwt_user_id}}, {upsert: true}, (err, msg) => {

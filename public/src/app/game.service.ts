@@ -70,7 +70,8 @@ export class GameService {
   }
 
   editGame(data, successCallback, failCallback){
-    return this._authHttp.get("/api/editGame", data)
+    console.log(data);
+    return this._authHttp.post("/api/editGame/" + data.game._id, data)
     .map(response => response.json())
     .toPromise()
     .then((user) => {

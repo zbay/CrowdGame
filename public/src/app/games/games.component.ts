@@ -92,4 +92,13 @@ export class GamesComponent implements OnInit {
   });
   }
 
+  editGame(game){
+    console.log("Editing game");
+    this._gameService.editGame({game: game}, () => {
+      this.joinErr = undefined;
+    }, () => {
+      this.joinErr = "Failed to edit game! Make sure all fields are valid, and that you are logged in.";
+    });
+  }
+
 }

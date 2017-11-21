@@ -37,7 +37,7 @@
 
     <div class="error" *ngIf="(size.errors && (size.touched || size.dirty)) || game.size < 2">Please specify a valid number of players!</div>
 
-    <input type="submit" value="Post Game" [disabled]="form.invalid && game.size < 2"/>
+    <input type="submit" value="Post Game" [disabled]="form.invalid || game.size < 2"/>
 
     <div class="error" *ngIf="errorMsg">{{errorMsg}}</div>
   </fieldset>
