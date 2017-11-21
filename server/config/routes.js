@@ -57,6 +57,9 @@ module.exports = function(app) {
     app.post("/api/leave", hasJWT, (req, res) => { // leave a gmae
         games.leaveGame(req, res);
     });
+    app.post("/api/game/:gameID/comment", hasJWT, () => { // post a comment
+        games.saveComment(req, res);
+    });
     app.all("*", (req, res, next) => { // defer to front-end routing
         res.sendFile(path.resolve("./public/dist/index.html"))
     });

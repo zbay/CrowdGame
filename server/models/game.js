@@ -35,6 +35,20 @@ const GameSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
+    comments: [{
+        author: {
+            type: String,
+            required: [true, "A comment must have an author"]
+        },
+        message: {
+            type: String,
+            required: [true, "A comment cannot be blank!"]
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 mongoose.model('Game', GameSchema);

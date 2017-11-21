@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
+import * as io from 'socket.io-client'
+
+// https://www.djamware.com/post/58e0d15280aca75cdc948e4e/building-chat-application-using-mean-stack-angular-4-and-socketio
 
 @Component({
   selector: 'app-game',
@@ -13,10 +16,16 @@ export class GameComponent implements OnInit {
   gameID: String;
   joinErr;
   user_id: String;
+  socket;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) { 
+    this.socket = io.connect();
     this._route.paramMap.subscribe(params => {
+      if(this.gameID){
+        this.socket.emit("leaveRoom", this.gameID);
+      }
       this.gameID = params.get('id');
+      this.socket.emit("joinRoom", this.gameID);
     });
   }
   
@@ -25,6 +34,10 @@ export class GameComponent implements OnInit {
         this.game = data.game;
         this.user_id = this._loginService.getDecodedToken().sub;
       }, this.redirect.bind(this));
+    }
+
+    ngOnDestroy(){
+      this.socket.emit("leaveRoom", this.gameID);
     }
 
     redirect(){

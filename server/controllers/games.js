@@ -41,7 +41,7 @@ module.exports = {
         });
     },
     getOpenGames: function(req, res){
-        Game.find({open: true}).exec((err, games) => {
+        Game.find({open: true}).sort({created_at: -1}).exec((err, games) => {
             if(err){
                 return res.status(500).json({error: "Could not load games. Try again later!"});
             }
@@ -54,6 +54,16 @@ module.exports = {
                 return res.status(500).json({error: "Could not load games."});
             }
             res.json({games: games});
+        });
+    },
+    saveComment: function(req, res){
+        // no jwt requirement?
+        Game.findOneAndUpdate({_id: req.params.gameID}, {$push: {comments: req.body.comment}}, (err, msg) => {
+            if(err){
+                return res.status(500).json({error: "Could not save comment!"});
+            }
+            
+            res.json({success: "Saved comment!"});
         });
     },
     closeGame: (req, res) => {
