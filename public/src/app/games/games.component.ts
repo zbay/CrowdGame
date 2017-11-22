@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 
 @Component({
@@ -12,14 +12,20 @@ export class GamesComponent implements OnInit {
   games = [];
   user_id: String;
   joinErr;
+  pageNum: number = 1;
+  perPage: number = 3;
 
-  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) { }
+  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) {
+    this._route.paramMap.subscribe(params => {
+      if(params.get('page') || params.get('page').length > 0){
+        this.pageNum = parseInt(params.get('page'));
+      }
+    });
+   }
 
   ngOnInit() {
-      console.log("games init");
-        this._gameService.getOpenGames((data) => {
+        this._gameService.getOpenGames(this.pageNum, (data) => {
           this.games = data.games;
-          console.log(this.games);
           this.user_id = this._loginService.getDecodedToken().sub;
         }, () => {
           this.redirect.bind(this);

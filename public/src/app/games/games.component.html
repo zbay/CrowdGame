@@ -4,3 +4,8 @@
 <app-gamebox *ngFor="let game of games" [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
     (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
     (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
+<div>
+    <a *ngIf="pageNum > 1" href="/games/{{pageNum-1}}"><button>Page {{pageNum-1}}</button></a>
+    <span *ngIf="pageNum > 1 && games.length >= perPage"> | </span>
+    <a *ngIf="games.length >= perPage" href="/games/{{pageNum+1}}"><button>Page {{pageNum+1}}</button></a>
+</div>

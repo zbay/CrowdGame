@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 const Comment = mongoose.model('Comment');
+const perPage = 3;
 
 module.exports = {
     newGame: function(req, res){
@@ -42,7 +43,8 @@ module.exports = {
         });
     },
     getOpenGames: function(req, res){
-        Game.find({open: true}).sort({created_at: -1}).exec((err, games) => {
+        let skip = (parseInt(req.params.pageNum)-1)*perPage;
+        Game.find({open: true}).sort({created_at: -1}).limit(3).skip(skip).exec((err, games) => {
             if(err){
                 return res.status(500).json({error: "Could not load games. Try again later!"});
             }

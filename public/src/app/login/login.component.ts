@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   goBrowse(response){
-    this._router.navigate(['/games']);
+    this._router.navigate(['/games/1']);
   }
 
   showError(err){

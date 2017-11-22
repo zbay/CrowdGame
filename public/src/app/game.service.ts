@@ -9,8 +9,8 @@ export class GameService {
 
   constructor(private _http: Http, private _authHttp: AuthHttp) { }
 
-  getOpenGames(successCallback, failCallback){
-    return this._authHttp.get("/api/openGames")
+  getOpenGames(pageNum, successCallback, failCallback){
+    return this._authHttp.get("/api/openGames/" + pageNum)
     .map(response => response.json())
     .toPromise()
     .then((user) => {
