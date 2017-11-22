@@ -87,6 +87,21 @@ module.exports = {
             }
         });
     },
+    openGame: (req, res) => {
+        Game.findById(req.params.gameID, (error, game) => {
+            if(error || game.creator._id != req.body.jwt_user_id){
+                return res.status(500).json({error: "Server error. Could not open this game!"});
+            }
+            else{
+                Game.findOneAndUpdate({_id: req.params.gameID}, {$set: {open: true}}, (err, msg) => {
+                    if(err){
+                        return res.status(500).json({error: "Server error. Could not open this game!"});
+                    }
+                    res.json({success: "Game opened!"});
+                });
+            }
+        });       
+    },
     editGame: function(req, res){
         let game = req.body.game;
         Game.findById(req.params.gameID, (error, msg) => {

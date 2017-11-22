@@ -13,7 +13,7 @@ import * as io from 'socket.io-client'
 })
 export class GameComponent implements OnInit {
   game = {_id: "", name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?",
-    location: "N/A", size: 0, players: [], creator: {}, comments: []};
+    location: "N/A", size: 0, players: [], creator: {}, comments: [], open: true};
   comment: "";
   gameID: String;
   joinErr;
@@ -50,7 +50,7 @@ export class GameComponent implements OnInit {
     }
 
     redirect(){
-      this._router.navigate(['/']);
+      this._router.navigate(['/games']);
     }
 
     joinGame(gameID){
@@ -78,6 +78,44 @@ export class GameComponent implements OnInit {
         }
       }, ()=> {
         this.joinErr = "Failed to leave this game! Maybe it was deleted.";
+      });
+    }
+
+    deleteGame(gameID){
+      this._gameService.deleteGame({gameID: gameID}, () =>{
+        this.redirect();
+      },
+    () => {
+      this.joinErr = "Failed to delete game! Are you logged in?";
+    });
+    }
+  
+    closeGame(gameID){
+      this._gameService.closeGame({gameID: gameID}, () =>{
+        this.joinErr = undefined;
+        this.game.open = false;
+      },
+    () => {
+      this.joinErr = "Failed to close game! Are you logged in?";
+    });
+    }
+
+    openGame(gameID){
+      this._gameService.openGame({gameID: gameID}, () => {
+        this.joinErr = undefined;
+        this.game.open = true;
+      },
+    () => {
+      this.joinErr = "Failed to open game! Are you logged in?";
+    });
+    }
+  
+    editGame(game){
+      console.log("Editing game");
+      this._gameService.editGame({game: game}, () => {
+        this.joinErr = undefined;
+      }, () => {
+        this.joinErr = "Failed to edit game! Make sure all fields are valid, and that you are logged in.";
       });
     }
 

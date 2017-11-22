@@ -2,30 +2,10 @@
 <p>
   {{game | json}}}
 </p>
-  <div class="col col-3 game">
-      <h2>
-          <a href="/games/{{game._id}}">{{game.name}}</a>
-      </h2>
-      <img [src]="game.creator.imgURL"/>
-      <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
-  </div>
-  <div class="col col-6">
-      <p>When: {{game.time}}</p>
-      <p>Where: {{game.location}}</p>
-      <p>Details: {{game.details}}</p>
-  </div>
-  <div class="col col-2">
-      <p>Players:</p>
-      <p>{{game.players.length}} / {{game.size}}</p>
-      <div *ngIf="joinErr">{{joinErr}}</div>
-      <form #form="ngForm" (submit)="joinGame(game._id)" *ngIf="game.players.indexOf(user_id) === -1">
-          <input type="Submit" value="Join This Game"/>
-      </form>
-      <form #form="ngForm" (submit)="leaveGame(game._id)" *ngIf="game.players.indexOf(user_id) > -1">
-          <input type="Submit" value="Leave This Game"/>
-      </form>
-  </div>
-  <div class="chatBox">
+<app-gamebox [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
+(leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
+(deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
+<div class="chatBox">
       <div class="chatMessage" *ngFor="let comment of game.comments">
           <div>
             <span>{{comment.author}}</span>, <span>{{comment.createdAt}}</span>: 
@@ -39,4 +19,4 @@
         </div>
         <input type="submit" value="Post Comment" [disabled]="form.invalid"/>
       </form>
-  </div>
+</div>

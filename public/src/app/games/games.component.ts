@@ -92,6 +92,21 @@ export class GamesComponent implements OnInit {
   });
   }
 
+  openGame(gameID){
+    this._gameService.openGame({gameID: gameID}, () =>{
+      this.joinErr = undefined;
+      // remove game from list without reloading from server
+      for(let i = 0; i < this.games.length; i++){
+        if(gameID === this.games[i]._id){
+          this.games[i].open = true;
+        }
+      }
+    },
+  () => {
+    this.joinErr = "Failed to close game! Are you logged in?";
+  });
+  }
+
   editGame(game){
     console.log("Editing game");
     this._gameService.editGame({game: game}, () => {

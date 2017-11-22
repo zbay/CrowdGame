@@ -94,6 +94,18 @@ export class GameService {
     });
   }
 
+  openGame(data, successCallback, failCallback){
+    return this._authHttp.post("/api/open/" + data.gameID, {})
+    .map(response => response.json())
+    .toPromise()
+    .then((user) => {
+      successCallback(user);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });
+  }
+
   joinGame(data, successCallback, failCallback){
     return this._authHttp.post("/api/join", data)
     .map(response => response.json())

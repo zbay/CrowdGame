@@ -22,6 +22,7 @@ import { GameService } from './game.service';
 import { AuthGuard } from './auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+import { GameboxComponent } from './gamebox/gamebox.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -43,7 +44,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchComponent,
     ValidUrlDirective,
     ValidEmailDirective,
-    AdminComponent
+    AdminComponent,
+    GameboxComponent
   ],
   imports: [
     BrowserModule,
