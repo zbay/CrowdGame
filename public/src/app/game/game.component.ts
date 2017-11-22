@@ -82,7 +82,7 @@ export class GameComponent implements OnInit {
     }
 
     newComment(){
-      this._gameService.newComment({comment: {message: this.comment, createdAt: Date.now(), author: this.user_name}}, this.game._id, (savedMsg) => {
+      this._gameService.newComment({comment: {message: this.comment, author: this.user_name}}, this.game._id, (savedMsg) => {
         this.commentErr = undefined;
         this.socket.emit("newMessage", savedMsg, this.game._id);
       }, ()=>{

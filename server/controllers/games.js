@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
+const Comment = mongoose.model('Comment');
 
 module.exports = {
     newGame: function(req, res){
@@ -58,11 +59,17 @@ module.exports = {
     },
     saveComment: function(req, res){
         // no jwt auth requirement?
-        Game.findOneAndUpdate({_id: req.params.gameID}, {$push: {comments: req.body.comment}}, (err, msg) => {
+        let newComment = new Comment(req.body.comment);
+        newComment.save((err, comment) => {
             if(err){
                 return res.status(500).json({error: "Could not save comment!"});
             }
-            res.json(req.body.comment);
+            Game.findOneAndUpdate({_id: req.params.gameID}, {$push: {comments: comment._id}}, (error, msg) => {
+                if(error){
+                    return res.status(500).json({error: "Could not save comment!"});
+                }
+                res.json(comment);
+            });       
         });
     },
     closeGame: (req, res) => {
@@ -116,7 +123,7 @@ module.exports = {
         });
     },
     getGame: function(req, res){
-        Game.findById(req.params.id).exec(function(err, game){
+        Game.findById(req.params.id).populate("comments").exec(function(err, game){
             if(err){
                 return res.status(500).json("Server error. Could not load this game!");
             }
