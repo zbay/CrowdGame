@@ -27,7 +27,7 @@ export class NewgameComponent implements OnInit {
   }
 
   goHome(){
-    this._router.navigate(['/games/1']);
+    this._router.navigate(['/games']);
   }
 
   showErrors(err){

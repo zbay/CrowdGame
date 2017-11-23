@@ -1,3 +1,4 @@
+// update pageNum with an onclick function that reloads the data.
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,26 +11,28 @@ import { GameService } from '../game.service';
 })
 export class GamesComponent implements OnInit {
   games = [];
-  user_id: String;
+  user_id: string;
+  searchTerm: string;
+  category: string;
   joinErr;
   pageNum: number = 1;
   perPage: number = 3;
 
-  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) {
-    this._route.paramMap.subscribe(params => {
-      if(params.get('page') || params.get('page').length > 0){
-        this.pageNum = parseInt(params.get('page'));
-      }
-    });
+  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) {
    }
 
   ngOnInit() {
-        this._gameService.getOpenGames(this.pageNum, (data) => {
-          this.games = data.games;
-          this.user_id = this._loginService.getDecodedToken().sub;
-        }, () => {
-          this.redirect.bind(this);
-        });
+    this.getGames();
+  }
+
+  getGames(){
+    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || ""};
+    this._gameService.getOpenGames(queryObj, (data) => {
+      this.games = data.games;
+      this.user_id = this._loginService.getDecodedToken().sub;
+    }, () => {
+      this.redirect.bind(this);
+    });
   }
 
   redirect(){
@@ -114,12 +117,26 @@ export class GamesComponent implements OnInit {
   }
 
   editGame(game){
-    console.log("Editing game");
     this._gameService.editGame({game: game}, () => {
       this.joinErr = undefined;
     }, () => {
       this.joinErr = "Failed to edit game! Make sure all fields are valid, and that you are logged in.";
     });
+  }
+
+  incPage(){
+    this.pageNum++;
+    this.getGames();
+  }
+
+  decPage(){
+    this.pageNum--;
+    this.getGames();
+  }
+
+  search(query){
+    this.searchTerm = query.searchTerm;
+    this.category = query.category;
   }
 
 }

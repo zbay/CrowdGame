@@ -4,8 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import * as io from 'socket.io-client'
 
-// https://www.djamware.com/post/58e0d15280aca75cdc948e4e/building-chat-application-using-mean-stack-angular-4-and-socketio
-
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -15,10 +13,10 @@ export class GameComponent implements OnInit {
   game = {_id: "", name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?",
     location: "N/A", size: 0, players: [], creator: {}, comments: [], open: true};
   comment: "";
-  gameID: String;
+  gameID: string;
   joinErr;
-  user_id: String;
-  user_name: String;
+  user_id: string;
+  user_name: string;
   socket;
   commentErr;
 

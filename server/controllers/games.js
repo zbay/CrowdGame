@@ -43,8 +43,8 @@ module.exports = {
         });
     },
     getOpenGames: function(req, res){
-        let skip = (parseInt(req.params.pageNum)-1)*perPage;
-        Game.find({open: true}).sort({created_at: -1}).limit(3).skip(skip).exec((err, games) => {
+        let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
+        Game.find({open: true}).sort({created_at: -1}).limit(3).skip(skipNum).exec((err, games) => {
             if(err){
                 return res.status(500).json({error: "Could not load games. Try again later!"});
             }

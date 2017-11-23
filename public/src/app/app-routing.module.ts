@@ -10,7 +10,7 @@ import { AuthGuard } from './auth-guard.service';
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: LandingComponent},
   {path: 'settings', pathMatch: 'full', component: SettingsComponent, canActivate: [AuthGuard]},
-  {path: 'games/:page', pathMatch: 'full', component: GamesComponent, canActivate: [AuthGuard]},
+  {path: 'games', pathMatch: 'full', component: GamesComponent, canActivate: [AuthGuard]},
   {path: 'new', pathMatch: 'full', component: NewgameComponent, canActivate: [AuthGuard]},
   {path: 'game/:id', pathMatch: 'full', component: GameComponent, canActivate: [AuthGuard]},
   {path: '**', component: LandingComponent},     

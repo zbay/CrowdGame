@@ -1,3 +1,10 @@
-<p>
-  search works!
-</p>
+<form #form="ngForm" (submit)="search()">
+  <div class="form-group">
+    <label for="searchTerm">Search term</label>
+    <input placeholder="Name, location, or description" name="searchTerm" type="text"/>
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+  </div>
+  <input type="submit" value="Search"/>
+</form>

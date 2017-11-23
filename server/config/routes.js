@@ -29,7 +29,7 @@ module.exports = function(app) {
     app.get("/api/me", hasJWT, (req, res) => { // get your own data
         users.getMe(req, res);
     });
-    app.get("/api/openGames/:pageNum", hasJWT, (req, res) => { // get all open games
+    app.post("/api/openGames", hasJWT, (req, res) => { // get all open games
         games.getOpenGames(req, res);
     });
     app.post("/api/newGame", hasJWT, (req, res) => { // post a new game
