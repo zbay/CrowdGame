@@ -11,9 +11,10 @@
                   <p>When: {{game.time}}</p>
                   <p>Where: {{game.location}}</p>
                   <p>Details: {{game.details}}</p>
+                  <p>Category: {{game.category}}</p>
               </div>
               <div class="col col-2">
-                  <p>Players:</p>
+                  <p>Participants:</p>
                   <p>{{game.players.length}} / {{game.size}}</p>
                   <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1">
                       <input type="submit" value="Join This Game"/>
@@ -66,7 +67,7 @@
                   </div>           
               </div>
               <div class="col col-2">
-                  <p>Players:</p>
+                  <p>Participants:</p>
                   <p>{{game.players.length}} / <input #size="ngModel" type="number" step="1" name="size" [(ngModel)]="game.size" required min="2"/></p>
                   <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please set a valid size!</div>
                   <form #joinForm="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1">

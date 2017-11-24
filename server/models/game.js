@@ -38,7 +38,12 @@ const GameSchema = new mongoose.Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: "Comment"
-    }]
+    }],
+    category: {
+        type: String,
+        enum: ["Sport", "Game", "Collaboration", "Gathering", "Online game", "Online collaboration", "Online gathering"],
+        required: [true, "A game must be categorized!"]
+    }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 GameSchema.index({"name": 'text', "details": 'text', "location": 'text'}, {default_language: 'none'});

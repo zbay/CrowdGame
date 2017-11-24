@@ -9,7 +9,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./newgame.component.css']
 })
 export class NewgameComponent implements OnInit {
-  game = {name: "", time: "", details: "", location: "", size: 2};
+  game = {name: "", time: "", details: "", location: "", size: 2, category: "Sport"};
   errorMsg;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) { }

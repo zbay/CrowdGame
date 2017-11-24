@@ -11,7 +11,7 @@ import * as io from 'socket.io-client'
 })
 export class GameComponent implements OnInit {
   game = {_id: "", name: "No game!", time: "N/A", details: "No game with this ID exists. Maybe it was deleted?",
-    location: "N/A", size: 0, players: [], creator: {}, comments: [], open: true};
+    location: "N/A", size: 0, category: "N/A", players: [], creator: {}, comments: [], open: true};
   comment: "";
   gameID: string;
   joinErr;
