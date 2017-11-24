@@ -137,6 +137,7 @@ export class GamesComponent implements OnInit {
   search(query){
     this.searchTerm = query.searchTerm;
     this.category = query.category;
+    this.getGames();
   }
 
 }

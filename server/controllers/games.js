@@ -44,12 +44,33 @@ module.exports = {
     },
     getOpenGames: function(req, res){
         let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
-        Game.find({open: true}).sort({created_at: -1}).limit(3).skip(skipNum).exec((err, games) => {
-            if(err){
-                return res.status(500).json({error: "Could not load games. Try again later!"});
-            }
-            res.json({games: games});
+        console.log("Search term: ");
+        console.log(req.body.searchTerm);
+        console.log(req.body.searchTerm.length);
+        if(req.body.searchTerm && req.body.searchTerm.length > 0){
+            Game.find({open: true, $text: {$search: req.body.searchTerm}})
+            .sort({created_at: -1})
+            .limit(3).skip(skipNum)
+            .exec((err, games) => {
+                if(err){
+                    console.log(err.message);
+                    return res.status(500).json({error: "Could not load games. Try again later!"});
+                }
+                res.json({games: games});
         });
+        }
+        else{
+            Game.find({open: true})
+            .sort({created_at: -1})
+            .limit(3).skip(skipNum)
+            .exec((err, games) => {
+                if(err){
+                    console.log(err.message);
+                    return res.status(500).json({error: "Could not load games. Try again later!"});
+                }
+                res.json({games: games});
+        });     
+        }
     },
     getMyGames: function(req, res){
         Game.find({creator: req.body.jwt_user_id}).sort({open: -1, created_at: -1}).exec((err, games) => {

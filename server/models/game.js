@@ -41,4 +41,5 @@ const GameSchema = new mongoose.Schema({
     }]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
+GameSchema.index({"name": 'text', "details": 'text', "location": 'text'}, {default_language: 'none'});
 mongoose.model('Game', GameSchema);
