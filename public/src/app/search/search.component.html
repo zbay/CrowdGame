@@ -5,6 +5,16 @@
   </div>
   <div class="form-group">
     <label for="category">Category</label>
+    <select name="category" [(ngModel)]="category">
+      <option value="Any">Any</option>
+      <option value="Sport">Sport</option>
+      <option value="Game">Game</option>
+      <option value="Collaboration">Collaboration</option>
+      <option value="Gathering">Gathering</option>
+      <option value="Online game">Online game</option>
+      <option value="Online collaboration">Online collaboration</option>
+      <option value="Online gathering">Online gathering</option>
+    </select>
   </div>
   <input type="submit" value="Search"/>
 </form>

@@ -29,8 +29,8 @@ module.exports = function(app) {
     app.get("/api/me", hasJWT, (req, res) => { // get your own data
         users.getMe(req, res);
     });
-    app.post("/api/openGames", hasJWT, (req, res) => { // get all open games
-        games.getOpenGames(req, res);
+    app.post("/api/getGames", hasJWT, (req, res) => { // get all open games
+        games.getGames(req, res);
     });
     app.post("/api/newGame", hasJWT, (req, res) => { // post a new game
         games.newGame(req, res);
@@ -45,7 +45,6 @@ module.exports = function(app) {
         games.deleteGame(req, res);
     });
     app.post("/api/editGame/:gameID", hasJWT, (req, res) => { // save changes to a game
-        console.log("editing game?");
         games.editGame(req, res);
     });
     app.post("/api/close/:gameID", hasJWT, (req, res) => { // close game

@@ -26,7 +26,7 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(){
-    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || ""};
+    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || "", category: this.category || "Any"};
     this._gameService.getOpenGames(queryObj, (data) => {
       this.games = data.games;
       this.user_id = this._loginService.getDecodedToken().sub;
