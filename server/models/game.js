@@ -19,7 +19,7 @@ const GameSchema = new mongoose.Schema({
         type: String,
         required: [true, "A game must have a location!"]
     },
-    date: { // why include date and time? aren't they redundant? Yes, but they're useful for editing forms
+    date: { // why include date and time? aren't they redundant? Yes, but they're convenient to have for editing forms. Maybe refactor to get rid of datetime field, actually
         type: String
     },
     time: {
@@ -28,6 +28,14 @@ const GameSchema = new mongoose.Schema({
     datetime: {
         type: Date,
         required: [true, "A datetime is required!"],
+        validate: [
+            {
+                validator: function(dt){
+                    return dt.getTime() > new Date().getTime();
+                },
+                message: "The date/time must be set in the future!"
+            }
+        ]
     },
     open: {
         type: Boolean,

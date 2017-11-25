@@ -34,9 +34,9 @@ export class GameService {
   }
 
   newGame(data, successCallback, failCallback){
-    let saveDate = new Date(data.date + "T" + data.time); // save date, in local time
+    // save date, in local time
     // assumes YYYY-MM-DD format for date and HH:MM format for time
-    data.datetime = saveDate;
+    data.datetime = new Date(data.date + "T" + data.time);
     return this._authHttp.post("/api/newGame", data)
     .map(response => response.json())
     .toPromise()
@@ -73,7 +73,6 @@ export class GameService {
   }
 
   editGame(data, successCallback, failCallback){
-    console.log(data);
     return this._authHttp.post("/api/editGame/" + data.game._id, data)
     .map(response => response.json())
     .toPromise()

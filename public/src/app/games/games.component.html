@@ -10,8 +10,7 @@
     (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
     (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
 <div>
-    <a *ngIf="pageNum > 1" (click)="decPage()"><button>Page {{pageNum-1}}</button></a>
-    
+    <a *ngIf="pageNum > 1" (click)="decPage()"><button>Page {{pageNum-1}}</button></a> 
     <span *ngIf="pageNum > 1 && games.length >= perPage"> | </span>
     <a *ngIf="games.length >= perPage" (click)="incPage()"><button>Page {{pageNum+1}}</button></a>
 </div>

@@ -21,7 +21,7 @@ module.exports = {
             newGame.save((err2, msg) => {
                 if(err2){
                     console.log(err2.message);
-                    return res.status(500).json({error: "Server error! Could not save the game."});
+                    return res.status(500).json({error: err2.message});
                 }
                 else{
                     res.json({success: "Game created!"});
@@ -129,11 +129,12 @@ module.exports = {
             }
             Game.findOneAndUpdate({_id: req.params.gameID}, 
                 {$set: 
-                    {name: game.name, details: game.details, time: game.time, size: parseInt(game.size), location: game.location}}, 
+                    {name: game.name, details: game.details, time: game.time, size: parseInt(game.size),
+                         location: game.location, datetime: game.datetime, date: game.date, time: game.time}}, 
                     {runValidators: true},
                 (err, msg) => {
                     if(err){
-                        console.log(error);
+                        console.log(error.message);
                         return res.status(500).json({error: "Server error. Could not edit this game!"});
                     }
                     res.json({success: "Game edits saved!"});

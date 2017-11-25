@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, RequestOptions, Http } from '@angular/http';
 import { ValidUrlDirective } from './shared/url.validator';
 import { ValidEmailDirective } from './shared/email.validator';
+import { ValidTimeDirective } from './shared/time.validator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchComponent,
     ValidUrlDirective,
     ValidEmailDirective,
+    ValidTimeDirective,
     AdminComponent,
     GameboxComponent
   ],

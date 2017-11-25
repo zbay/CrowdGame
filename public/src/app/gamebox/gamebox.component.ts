@@ -42,6 +42,7 @@ export class GameboxComponent implements OnInit {
   }
 
   onEdit(){
+    this.game.datetime = new Date(this.game.date + "T" + this.game.time);
     this.editEmitter.emit(this.game);
   }
 
