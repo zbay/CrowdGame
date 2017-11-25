@@ -1,7 +1,6 @@
-// update pageNum with an onclick function that reloads the data.
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../login.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { GameService } from '../game.service';
 
 @Component({

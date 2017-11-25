@@ -7,34 +7,34 @@
       <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
     </div>
 
-    <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your game a name!</div>
+    <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
 
     <div class="form-group">
       <label for="location">Location (be specific):</label>
       <input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/>
     </div>
 
-    <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">A game location is required!</div>
+    <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">An event location is required!</div>
 
     <div class="form-group">
       <label for="date">Date:</label>
       <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" required/>
     </div>
-    <div class="error" *ngIf="date.errors && (date.touched || date.dirty)">Please specify a game date!</div>
+    <div class="error" *ngIf="date.errors && (date.touched || date.dirty)">Please specify an event date!</div>
 
     <div class="form-group">
       <label for="time">Time (local):</label>
       <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" required />
     </div>
 
-    <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">Please specify an approximate game time!</div>
+    <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">Please specify an approximate event time!</div>
 
     <div class="form-group">
       <label for="details">Details:</label>
       <input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required />
     </div>
 
-    <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">A game description is required!</div>
+    <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">An event description is required!</div>
 
     <div class="form-group">
       <label for="size">Number of participants:</label>

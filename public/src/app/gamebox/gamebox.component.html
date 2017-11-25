@@ -17,23 +17,23 @@
                   <p>Participants:</p>
                   <p>{{game.players.length}} / {{game.size}}</p>
                   <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
-                      <input type="submit" value="Join This Game"/>
+                      <input type="submit" value="Join This Event"/>
                   </form>
                   <form #form="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
-                      <input type="submit" value="Leave This Game"/>
+                      <input type="submit" value="Leave This Event"/>
                   </form>
                   <div *ngIf="game.creator._id === user_id">
                       <form #form="ngForm" (submit)="onDelete()">
-                          <input type="submit" value="Delete This Game"/>
+                          <input type="submit" value="Delete This Event"/>
                       </form>
                       <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
-                          <input type="submit" value="Close This Game"/>
+                          <input type="submit" value="Close This Event"/>
                       </form>
                       <form #form="ngForm" *ngIf="!game.open" (submit)="onOpen()">
-                        <input type="submit" value="Open This Game"/>
+                        <input type="submit" value="Open This Event"/>
                       </form>
                       <form #form="ngForm" (submit)="game.editing = true">
-                          <input type="submit" value="Edit This Game"/>
+                          <input type="submit" value="Edit This Event"/>
                       </form>
                   </div>
               </div>
@@ -44,21 +44,26 @@
                   <div class="form-group">
                       <label for="name">Game Name: </label>
                       <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
-                      <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your game a name!</div>
+                      <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
                   </div>
                   <img [src]="game.creator.imgURL"/>
                   <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
               </div>
               <div class="col col-6">
-                  <div class="form-group">
-                      <label for="time">When: </label>
-                      <input type="text" name="time" [(ngModel)]="game.time" #time="ngModel" required/>
-                      <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">You must give your game a time!</div>
-                  </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" required/>
+                    <div class="error" *ngIf="date.errors && (date.touched || date.dirty)">Please specify an event date!</div>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time (local):</label>
+                    <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" required />
+                    <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">Please specify an approximate event time!</div>
+                </div>
                   <div class="form-group">
                       <label for="location">Where: </label>
                       <input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/>
-                      <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">You must give your game a location!</div>
+                      <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">You must give your event a location!</div>
                   </div>
                   <div class="form-group">
                       <label for="details">Details: </label>
@@ -71,22 +76,22 @@
                   <p>{{game.players.length}} / <input #size="ngModel" type="number" step="1" name="size" [(ngModel)]="game.size" required min="2"/></p>
                   <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please set a valid size!</div>
                   <form #joinForm="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
-                      <input type="submit" value="Join This Game"/>
+                      <input type="submit" value="Join This Event"/>
                   </form>
                   <form #leaveForm="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
-                      <input type="submit" value="Leave This Game"/>
+                      <input type="submit" value="Leave This Event"/>
                   </form>
                   <div *ngIf="game.creator._id === user_id">
                       <form #deleteForm="ngForm" (submit)="onDelete()">
-                          <input type="submit" value="Delete This Game"/>
+                          <input type="submit" value="Delete This Event"/>
                       </form>
                       <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
-                        <input type="submit" value="Close This Game"/>
+                        <input type="submit" value="Close This Event"/>
                     </form>
                     <form #form="ngForm" *ngIf="!game.open" (submit)="onOpen()">
-                      <input type="submit" value="Open This Game"/>
+                      <input type="submit" value="Open This Event"/>
                     </form>
-                      <input type="submit" [disabled]="editForm.invalid || game.size < 2" value="Save This Game"/>
+                      <input type="submit" [disabled]="editForm.invalid || game.size < 2" value="Save This Event"/>
                   </div>
               </div>
        </form>
