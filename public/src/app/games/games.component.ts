@@ -17,6 +17,7 @@ export class GamesComponent implements OnInit {
   joinErr;
   pageNum: number = 1;
   perPage: number = 3;
+  justMine: boolean = false;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) {
    }
@@ -26,7 +27,7 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(){
-    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || "", category: this.category || "Any"};
+    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || "", category: this.category || "Any", justMine: this.justMine};
     this._gameService.getOpenGames(queryObj, (data) => {
       this.games = data.games;
       this.user_id = this._loginService.getDecodedToken().sub;
@@ -61,6 +62,9 @@ export class GamesComponent implements OnInit {
           for(let j = 0; j < this.games[i].players.length; j++){
             if(this.games[i].players[j] === this.user_id){
               this.games[i].players.splice(j, 1);
+              if(!this.justMine && this.games[i].creator != this.user_id){ // delete game if you only want yours, and you didn't create it
+                this.games.splice(i, 1);
+              }
               break;
             }
           }
@@ -92,7 +96,10 @@ export class GamesComponent implements OnInit {
       // remove game from list without reloading from server
       for(let i = 0; i < this.games.length; i++){
         if(gameID === this.games[i]._id){
-          this.games.splice(i, 1);
+          this.games[i].open = false;
+          if(!this.justMine){
+            this.games.splice(i, 1);
+          }
         }
       }
     },
@@ -137,12 +144,15 @@ export class GamesComponent implements OnInit {
   search(query){
     this.searchTerm = query.searchTerm;
     this.category = query.category;
+    this.justMine = query.justMine;
+    this.pageNum = 1;
     this.getGames();
   }
 
   resetSearch(){
     this.searchTerm = "";
     this.category = "Any";
+    this.pageNum = 1;
     this.getGames();
   }
 }

@@ -46,14 +46,18 @@ module.exports = {
         let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
         let searchObj = {open: true};
         if(req.body.searchTerm && req.body.searchTerm.length > 0){
-            searchObj = {open: true, $text: {$search: req.body.searchTerm}};
-            if(req.body.category && req.body.category !== "Any"){
-                searchObj.category = req.body.category;
-            }
+            searchObj.$text = {$search: req.body.searchTerm};
+        }
+        if(req.body.category && req.body.category !== "Any"){
+            searchObj.category = req.body.category;
+        }
+        if(req.body.justMine){
+            searchObj.$or = [{creator: req.body.jwt_user_id}, {players: {$in: [req.body.jwt_user_id]}}]; // user created the game or is in game
+            delete searchObj.open;
         }
         Game.find(searchObj)
         .sort({created_at: -1})
-        .limit(3).skip(skipNum)
+        .limit(perPage).skip(skipNum)
         .exec((err, games) => {
             if(err){
                 console.log(err.message);

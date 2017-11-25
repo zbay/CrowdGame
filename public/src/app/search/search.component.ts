@@ -10,6 +10,7 @@ export class SearchComponent implements OnInit {
   @Output() resetEmitter = new EventEmitter();
   searchTerm: string = "";
   category: string = "Any";
+  justMine: boolean = false;
 
   constructor() { }
 
@@ -17,11 +18,16 @@ export class SearchComponent implements OnInit {
   }
 
   search(){
-    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category});
+    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category, justMine: this.justMine});
   }
 
   resetSearch(){
     this.resetEmitter.emit();
+  }
+
+  toggleMine(){
+    this.justMine = !this.justMine;
+    console.log(this.justMine);
   }
 
 }

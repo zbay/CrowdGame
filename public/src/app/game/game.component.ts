@@ -19,10 +19,11 @@ export class GameComponent implements OnInit {
   user_name: string;
   socket;
   commentErr;
+  idSubscription;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) { 
     this.socket = io.connect();
-    this._route.paramMap.subscribe(params => {
+    this.idSubscription = this._route.paramMap.subscribe(params => {
       if(this.gameID){
         this.socket.emit("leaveRoom", this.gameID);
       }
@@ -45,6 +46,7 @@ export class GameComponent implements OnInit {
 
     ngOnDestroy(){
       this.socket.emit("leaveRoom", this.gameID);
+      this.idSubscription.unsubscribe();
     }
 
     redirect(){
