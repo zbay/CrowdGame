@@ -34,6 +34,9 @@ export class GameService {
   }
 
   newGame(data, successCallback, failCallback){
+    let saveDate = new Date(data.date + "T" + data.time); // save date, in local time
+    // assumes YYYY-MM-DD format for date and HH:MM format for time
+    data.datetime = saveDate;
     return this._authHttp.post("/api/newGame", data)
     .map(response => response.json())
     .toPromise()

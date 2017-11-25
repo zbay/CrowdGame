@@ -19,9 +19,9 @@ const GameSchema = new mongoose.Schema({
         type: String,
         required: [true, "A game must have a location!"]
     },
-    time: {
-        type: String,
-        required: [true, "An approximate game time is required!"]
+    datetime: {
+        type: Date,
+        required: [true, "A datetime is required!"],
     },
     open: {
         type: Boolean,
@@ -42,7 +42,7 @@ const GameSchema = new mongoose.Schema({
     category: {
         type: String,
         enum: ["Sport", "Game", "Collaboration", "Gathering", "Online game", "Online collaboration", "Online gathering"],
-        required: [true, "A game must be categorized!"]
+        required: [true, "A game must possess a valid category!"]
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 

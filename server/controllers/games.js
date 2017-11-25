@@ -8,6 +8,7 @@ module.exports = {
     newGame: function(req, res){
         User.find({_id: req.body.jwt_user_id}).exec(function(err, users){
             if(err){
+                console.log(err.message);
                 return res.status(500).json({error: "Server error! Could not save the game."});
             }
             if(users.length === 0){
@@ -19,6 +20,7 @@ module.exports = {
             let newGame = new Game(req.body);
             newGame.save((err2, msg) => {
                 if(err2){
+                    console.log(err2.message);
                     return res.status(500).json({error: "Server error! Could not save the game."});
                 }
                 else{

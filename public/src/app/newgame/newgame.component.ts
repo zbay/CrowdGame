@@ -9,7 +9,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./newgame.component.css']
 })
 export class NewgameComponent implements OnInit {
-  game = {name: "", time: "", details: "", location: "", size: 2, category: "Sport"};
+  game = {name: "", time: "", date: "", details: "", location: "", size: 2, category: "Sport"};
   errorMsg;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) { }
@@ -23,6 +23,7 @@ export class NewgameComponent implements OnInit {
   }
 
   newGame(){
+    console.log(this.game);
     this._gameService.newGame(this.game, this.goHome.bind(this), this.showErrors.bind(this));
   }
 

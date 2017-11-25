@@ -8,7 +8,7 @@
                   <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
               </div>
               <div class="col col-6">
-                  <p>When: {{game.time}}</p>
+                  <p>When: {{game.datetime | date:'short'}}</p>
                   <p>Where: {{game.location}}</p>
                   <p>Details: {{game.details}}</p>
                   <p>Category: {{game.category}}</p>
