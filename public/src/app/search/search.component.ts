@@ -7,8 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
   @Output() searchEmitter = new EventEmitter();
+  @Output() resetEmitter = new EventEmitter();
   searchTerm: string = "";
-  category: string = "";
+  category: string = "Any";
 
   constructor() { }
 
@@ -17,6 +18,10 @@ export class SearchComponent implements OnInit {
 
   search(){
     this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category});
+  }
+
+  resetSearch(){
+    this.resetEmitter.emit();
   }
 
 }

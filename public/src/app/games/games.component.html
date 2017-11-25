@@ -1,9 +1,11 @@
 <app-nav></app-nav>
-<app-search (searchEmitter)="search($event)"></app-search>
+<app-search (searchEmitter)="search($event)" (resetEmitter)="resetSearch($event)"></app-search>
 {{games | json}}
 <div *ngIf="searchTerm">Search results including: {{searchTerm}}</div>
-<div *ngIf="category">Category: {{category}}</div>
-<div *ngIf="joinErr">{{joinErr}}</div>
+<div *ngIf="category">Category filter: {{category}}</div>
+<div *ngIf="games.length === 0" class="error">There are no games here!</div>
+<div *ngIf="joinErr" class="error">{{joinErr}}</div>
+<button (click)="getGames()">Reload</button>
 <app-gamebox *ngFor="let game of games" [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
     (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
     (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>

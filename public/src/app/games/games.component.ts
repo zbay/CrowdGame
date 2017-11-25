@@ -140,4 +140,9 @@ export class GamesComponent implements OnInit {
     this.getGames();
   }
 
+  resetSearch(){
+    this.searchTerm = "";
+    this.category = "Any";
+    this.getGames();
+  }
 }
