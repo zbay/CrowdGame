@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -6,6 +6,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  @Input() myGamesTab = false;
   @Output() searchEmitter = new EventEmitter();
   @Output() resetEmitter = new EventEmitter();
   searchTerm: string = "";
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(){
-    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category, justMine: this.justMine});
+    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category, justMine: this.justMine || this.myGamesTab});
   }
 
   resetSearch(){

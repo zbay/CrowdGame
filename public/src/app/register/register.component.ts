@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   }
 
   goBrowse(response){
-    this._router.navigate(['/games']);
+    this._router.navigate(['/events']);
   }
 
   showError(err){

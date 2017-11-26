@@ -16,7 +16,7 @@
       <option value="Online gathering">Online gathering</option>
     </select>
   </div>
-  <div class="form-group">
+  <div class="form-group" *ngIf="!myGamesTab">
     <label for="justMine">Only get games I've signed up for</label>
     <input type="checkbox" (change)="toggleMine()" name="justMine" />
   </div>

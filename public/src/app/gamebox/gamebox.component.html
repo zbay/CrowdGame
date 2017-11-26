@@ -2,7 +2,7 @@
   <div *ngIf="!game.editing">
           <div class="col col-3">
                   <h2>
-                      <a href="/game/{{game._id}}">{{game.name}}</a>
+                      <a [routerLink]="['/event/' + game._id]">{{game.name}}</a>
                   </h2>
                   <img [src]="game.creator.imgURL"/>
                   <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>

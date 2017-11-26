@@ -25,6 +25,8 @@ import { AuthGuard } from './auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { GameboxComponent } from './gamebox/gamebox.component';
+import { GroupsComponent } from './groups/groups.component';
+import { MygamesComponent } from './mygames/mygames.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -49,7 +51,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ValidTimeDirective,
     ValidDateDirective,
     AdminComponent,
-    GameboxComponent
+    GameboxComponent,
+    GroupsComponent,
+    MygamesComponent
   ],
   imports: [
     BrowserModule,

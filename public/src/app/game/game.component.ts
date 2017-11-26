@@ -50,7 +50,7 @@ export class GameComponent implements OnInit {
     }
 
     redirect(){
-      this._router.navigate(['/games']);
+      this._router.navigate(['/events']);
     }
 
     joinGame(gameID){

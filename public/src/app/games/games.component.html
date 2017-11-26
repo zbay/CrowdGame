@@ -1,16 +1,16 @@
 <app-nav></app-nav>
-<app-search (searchEmitter)="search($event)" (resetEmitter)="resetSearch($event)"></app-search>
+<app-search (searchEmitter)="search($event)" (resetEmitter)="resetSearch($event)" [myGamesTab]="myGamesTab"></app-search>
 {{games | json}}
 <div *ngIf="searchTerm">Search results including: {{searchTerm}}</div>
 <div *ngIf="category">Category filter: {{category}}</div>
-<div *ngIf="games.length === 0" class="error">There are no games here!</div>
+<div *ngIf="games.length === 0" class="error">There are no events here!</div>
 <div *ngIf="joinErr" class="error">{{joinErr}}</div>
 <button (click)="getGames()">Reload</button>
 <app-gamebox *ngFor="let game of games" [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
     (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
     (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
 <div>
-    <a *ngIf="pageNum > 1" (click)="decPage()"><button>Page {{pageNum-1}}</button></a> 
+    <button *ngIf="pageNum > 1" (click)="decPage()">Page {{pageNum-1}}</button>
     <span *ngIf="pageNum > 1 && games.length >= perPage"> | </span>
-    <a *ngIf="games.length >= perPage" (click)="incPage()"><button>Page {{pageNum+1}}</button></a>
+    <button *ngIf="games.length >= perPage" (click)="incPage()">Page {{pageNum+1}}</button>
 </div>

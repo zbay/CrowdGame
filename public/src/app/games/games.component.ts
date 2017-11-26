@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { GameService } from '../game.service';
@@ -9,6 +9,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./games.component.css']
 })
 export class GamesComponent implements OnInit {
+  @Input() myGamesTab = false;
   games = [];
   user_id: string;
   searchTerm: string;
@@ -22,6 +23,9 @@ export class GamesComponent implements OnInit {
    }
 
   ngOnInit() {
+    if(this.myGamesTab){
+      this.justMine = true;
+    }
     this.getGames();
   }
 
