@@ -1,0 +1,9 @@
+.current{
+    background-color:red;
+    color:yellow;
+}
+button{
+    font-weight:bold;
+    background-color: blue;
+    color:white;
+}

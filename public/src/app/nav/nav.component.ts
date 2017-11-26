@@ -8,10 +8,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  routeSubscription;
+  currentRoute = "/";
 
-  constructor(private _router: Router, private _loginService: LoginService) { }
+  constructor(private _router: Router, private _loginService: LoginService) { 
+    this.routeSubscription = _router.events.subscribe((event: any) => {
+      this.currentRoute = event.url;
+      console.log(this.currentRoute);
+    });
+  }
 
   ngOnInit() {}
+
+  ngOnDestroy(){
+    this.routeSubscription.unsubscribe();
+  }
 
   logout(){
     this._loginService.logout(this.goHome.bind(this));

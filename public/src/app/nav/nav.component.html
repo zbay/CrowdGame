@@ -1,8 +1,8 @@
 <div>
-  <button [routerLink]="['/events']">Browse Events</button>
-  <button [routerLink]="['/myEvents']">My Events</button>
-  <button [routerLink]="['/new']">New Event</button>
-  <button [routerLink]="['/groups']">Groups</button>
-  <button [routerLink]="['/settings']">Settings</button>
+  <button [routerLink]="['/events']" [ngClass]="{current: currentRoute === '/events'}">Browse Events</button>
+  <button [routerLink]="['/myEvents']" [ngClass]="{current: currentRoute === '/myEvents'}">My Events</button>
+  <button [routerLink]="['/new']" [ngClass]="{current: currentRoute === '/new'}">New Event</button>
+  <button [routerLink]="['/groups']" [ngClass]="{current: currentRoute === '/groups'}">Groups</button>
+  <button [routerLink]="['/settings']" [ngClass]="{current: currentRoute === '/settings'}">Settings</button>
   <button (click)="logout()">Log Out</button>
 </div>
