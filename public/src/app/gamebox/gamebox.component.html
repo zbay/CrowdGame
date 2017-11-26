@@ -52,13 +52,23 @@
               <div class="col col-6">
                 <div class="form-group">
                     <label for="date">Date:</label>
-                    <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" required/>
-                    <div class="error" *ngIf="date.errors && (date.touched || date.dirty)">Please specify an event date!</div>
+                    <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" required validDate/>
+                    <div class="error" *ngIf="date.errors && date.errors.required && (date.touched || date.dirty)">
+                        Please specify an event date!
+                    </div>
+                    <div class="error" *ngIf="date.errors && !date.errors.valid && !date.errors.required && (date.touched || date.dirty)">
+                        Please specify a valid event date, in the future, in YYYY-MM-DD format!
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="time">Time (local):</label>
                     <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" required validTime />
-                    <div class="error" *ngIf="time.errors && (time.touched || time.dirty)">Please specify an approximate event time in HH:MM form! Note that the hours range from 00 to 23.</div>
+                    <div class="error" *ngIf="time.errors && !time.errors.valid && !time.errors.required && (time.touched || time.dirty)">
+                            Please specify an approximate event time in HH:MM format! Note that the hour range is 00 to 23.
+                    </div>
+                    <div class="error" *ngIf="time.errors && time.errors.required && (time.touched || time.dirty)">
+                        Please specify an approximate event time!
+                    </div>
                 </div>
                   <div class="form-group">
                       <label for="location">Where: </label>

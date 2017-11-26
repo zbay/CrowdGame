@@ -134,7 +134,7 @@ module.exports = {
                     {runValidators: true},
                 (err, msg) => {
                     if(err){
-                        console.log(error.message);
+                        console.log(err.message);
                         return res.status(500).json({error: "Server error. Could not edit this game!"});
                     }
                     res.json({success: "Game edits saved!"});

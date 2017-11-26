@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment');
 
 const GameSchema = new mongoose.Schema({
     name: {
@@ -20,10 +21,20 @@ const GameSchema = new mongoose.Schema({
         required: [true, "A game must have a location!"]
     },
     date: { // why include date and time? aren't they redundant? Yes, but they're convenient to have for editing forms. Maybe refactor to get rid of datetime field, actually
-        type: String
+        type: String,
+        required: true,
+        validate: [
+            {
+                validator: function(d){
+                    return moment(d).isValid();
+                },
+                message: "The submitted date is not valid!"
+            }
+        ]
     },
     time: {
-        type: String
+        type: String,
+        required: true
     },
     datetime: {
         type: Date,

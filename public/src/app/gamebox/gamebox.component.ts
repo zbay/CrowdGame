@@ -42,8 +42,23 @@ export class GameboxComponent implements OnInit {
   }
 
   onEdit(){
+    this.game.date = this.padDatesWithZeroes(this.game.date);
+    console.log(this.game.date);
     this.game.datetime = new Date(this.game.date + "T" + this.game.time);
     this.editEmitter.emit(this.game);
+  }
+
+  padDatesWithZeroes(date){
+    let firstDashIndex = date.indexOf("-");
+    let temp = date.slice(firstDashIndex+1);
+    if(temp.indexOf("-") === 1){ // tack on a zero to the month, if necessary
+      date = date.slice(0, firstDashIndex+1) + "0" + date.slice(firstDashIndex+1);
+    }
+    temp = temp.slice(temp.indexOf("-")+1);
+    if(temp.length === 1){ // tack on a zero to the day, if necessary
+      date = date.slice(0, date.length-1) + "0" + date.charAt(date.length-1);
+    }
+    return date
   }
 
 }

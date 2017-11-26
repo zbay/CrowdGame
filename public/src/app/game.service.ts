@@ -36,6 +36,7 @@ export class GameService {
   newGame(data, successCallback, failCallback){
     // save date, in local time
     // assumes YYYY-MM-DD format for date and HH:MM format for time
+    data.date = this.padDatesWithZeroes(data.date);
     data.datetime = new Date(data.date + "T" + data.time);
     return this._authHttp.post("/api/newGame", data)
     .map(response => response.json())
@@ -82,6 +83,19 @@ export class GameService {
     .catch((err) => {
       failCallback(err);
     });
+  }
+
+  padDatesWithZeroes(date){
+    let firstDashIndex = date.indexOf("-");
+    let temp = date.slice(firstDashIndex+1);
+    if(temp.indexOf("-") === 1){ // tack on a zero to the month, if necessary
+      date = date.slice(0, firstDashIndex+1) + "0" + date.slice(firstDashIndex+1);
+    }
+    temp = temp.slice(temp.indexOf("-")+1);
+    if(temp.length === 1){ // tack on a zero to the day, if necessary
+      date = date.slice(0, date.length-1) + "0" + date.charAt(date.length-1);
+    }
+    return date;
   }
 
   closeGame(data, successCallback, failCallback){
