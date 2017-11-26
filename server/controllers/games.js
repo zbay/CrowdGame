@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 const Comment = mongoose.model('Comment');
+const Group = mongoose.model('Group');
 const perPage = 3;
 
 module.exports = {

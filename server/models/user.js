@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema({
         defualt: false
     },
     last_login_attempt: {type: Number}, // minutes since 1/1/1970
+    groups: [{
+        type: Schema.ObjectId,
+        ref: "Group"
+    }],
     strikes: {type: Number, default: 0}
 });
 

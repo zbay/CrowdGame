@@ -64,6 +64,10 @@ const GameSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "Comment"
     }],
+    /*groups: [{
+        type: Schema.Types.Objectid,
+        ref: "Group"
+    }],*/
     category: {
         type: String,
         enum: ["Sport", "Game", "Collaboration", "Gathering", "Online game", "Online collaboration", "Online gathering"],

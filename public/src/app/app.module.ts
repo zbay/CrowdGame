@@ -27,6 +27,7 @@ import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { GameboxComponent } from './gamebox/gamebox.component';
 import { GroupsComponent } from './groups/groups.component';
 import { MygamesComponent } from './mygames/mygames.component';
+import { GroupComponent } from './group/group.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -53,7 +54,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AdminComponent,
     GameboxComponent,
     GroupsComponent,
-    MygamesComponent
+    MygamesComponent,
+    GroupComponent
   ],
   imports: [
     BrowserModule,
