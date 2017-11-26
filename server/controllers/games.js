@@ -47,6 +47,7 @@ module.exports = {
     getGames: function(req, res){
         let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
         let searchObj = {open: true};
+        let sortObj = {datetime: 1};
         if(req.body.searchTerm && req.body.searchTerm.length > 0){
             searchObj.$text = {$search: req.body.searchTerm};
         }
@@ -56,9 +57,13 @@ module.exports = {
         if(req.body.justMine){
             searchObj.$or = [{creator: req.body.jwt_user_id}, {players: {$in: [req.body.jwt_user_id]}}]; // user created the game or is in game
             delete searchObj.open;
+            sortObj = {created_at: -1};
+        }
+        else{
+            searchObj.datetime = {$gte: new Date()}; // restrict to future games, unless they're your games
         }
         Game.find(searchObj)
-        .sort({created_at: -1})
+        .sort(sortObj) // get earliest games first (if browsing all), or most recently created games first (if browsing mine)
         .limit(perPage).skip(skipNum)
         .exec((err, games) => {
             if(err){
