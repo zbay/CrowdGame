@@ -1,0 +1,38 @@
+.gamebox{
+    border: 3px solid navy;
+    border-radius:3px;
+    margin-top:5px;
+    margin-bottom:5px;
+    padding:5px;
+    text-align:center;
+}
+.gamebox img{
+    max-width:100px;
+}
+.actionForms{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    flex-wrap:wrap;
+}
+.actionForms input{
+    width:100px;
+    margin:10px;
+}
+.actions{
+    border-top:3px solid navy;
+}
+.actions h3{
+    color:navy;
+    display:inline-block;
+}
+.gameInfo{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap:wrap;
+}
+.namePlusHost, .basics, .details, {
+    text-align:center;
+    width:33%;
+}

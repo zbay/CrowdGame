@@ -63,9 +63,9 @@ export class GamesComponent implements OnInit {
       for(let i = 0; i < this.games.length; i++){ // quit the game without reloading from the server
         if(gameID === this.games[i]._id){
           for(let j = 0; j < this.games[i].players.length; j++){
-            if(this.games[i].players[j] === this.user_id){
+            if(this.games[i].players[j] == this.user_id){
               this.games[i].players.splice(j, 1);
-              if(!this.justMine && this.games[i].creator != this.user_id){ // delete game if you only want yours, and you didn't create it
+              if(this.justMine && this.games[i].creator != this.user_id){ // delete game if you only want yours, and you didn't create it
                 this.games.splice(i, 1);
               }
               break;

@@ -13,7 +13,7 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     if(this._loginService.isLoggedIn){
-      this._router.navigate(['/games']);
+      this._router.navigate(['/events']);
     }
   }
 

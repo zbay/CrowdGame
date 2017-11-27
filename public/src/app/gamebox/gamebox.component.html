@@ -1,108 +1,131 @@
-<div class="game">
-  <div *ngIf="!game.editing">
-          <div class="col col-3">
+<div class="gamebox">
+  <div *ngIf="!game.editing" class="gameInfo">
+          <div class="namePlusHost">
                   <h2>
                       <a [routerLink]="['/event/' + game._id]">{{game.name}}</a>
                   </h2>
                   <img [src]="game.creator.imgURL"/>
-                  <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
+                  <h3>Host:</h3>
+                  <p>{{game.creator.firstName}} {{game.creator.lastName}}</p>
+            </div>
+              <div class="basics">
+                  <h3>When:</h3> 
+                  <p>{{game.datetime | date:'short'}}</p>
+                  <h3>Where:</h3>
+                  <p>
+                    {{game.location}}
+                  </p>
+                  <h3>Category:</h3>
+                  <p>{{game.category}}</p>
               </div>
-              <div class="col col-6">
-                  <p>When: {{game.datetime | date:'short'}}</p>
-                  <p>Where: {{game.location}}</p>
-                  <p>Details: {{game.details}}</p>
-                  <p>Category: {{game.category}}</p>
+              <div class="details">
+                <h3>Details:</h3>
+                <p>{{game.details}}</p>
+                <h3>Participants:</h3>
+                <p>{{game.players.length}} / {{game.size}}</p>
               </div>
-              <div class="col col-2">
-                  <p>Participants:</p>
-                  <p>{{game.players.length}} / {{game.size}}</p>
-                  <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
-                      <input type="submit" value="Join This Event"/>
-                  </form>
-                  <form #form="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
-                      <input type="submit" value="Leave This Event"/>
-                  </form>
-                  <div *ngIf="game.creator._id === user_id">
-                      <form #form="ngForm" (submit)="onDelete()">
-                          <input type="submit" value="Delete This Event"/>
-                      </form>
-                      <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
-                          <input type="submit" value="Close This Event"/>
-                      </form>
-                      <form #form="ngForm" *ngIf="!game.open" (submit)="onOpen()">
-                        <input type="submit" value="Open This Event"/>
-                      </form>
-                      <form #form="ngForm" (submit)="game.editing = true">
-                          <input type="submit" value="Edit This Event"/>
-                      </form>
-                  </div>
-              </div>
+    </div>
+              <div class="actions" *ngIf="!game.editing">
+                  <h2>Actions</h2>
+                    <div class="actionForms" *ngIf="game.creator._id !== user_id">
+                        <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
+                            <input type="submit" value="Join"/>
+                        </form>
+                        <form #form="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
+                            <input type="submit" value="Leave"/>
+                        </form>
+                    </div>
+                    <div class="actionForms" *ngIf="game.creator._id === user_id">
+                        <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
+                            <input type="submit" value="Join"/>
+                        </form>
+                        <form #form="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
+                            <input type="submit" value="Leave"/>
+                        </form>
+                        <form #form="ngForm" (submit)="onDelete()">
+                            <input type="submit" value="Delete"/>
+                        </form>
+                        <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
+                            <input type="submit" value="Close"/>
+                        </form>
+                        <form #form="ngForm" *ngIf="!game.open" (submit)="onOpen()">
+                            <input type="submit" value="Open"/>
+                        </form>
+                        <form #form="ngForm" (submit)="game.editing = true">
+                            <input type="submit" value="Edit"/>
+                        </form>
+                    </div>
   </div>
   <form *ngIf="game.editing" (submit)="onEdit(); game.editing=false" #editForm="ngForm">
-      <h1>EDITING!!!</h1>
-          <div class="col col-3">
-                  <div class="form-group">
-                      <label for="name">Game Name: </label>
-                      <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
-                      <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
-                  </div>
-                  <img [src]="game.creator.imgURL"/>
-                  <p>Host: {{game.creator.firstName}} {{game.creator.lastName}}</p>
+      <div class="namePlusHost">
+            <h1>EDITING!</h1>
+              <div class="form-group">
+                  <h3>Game Name: </h3>
+                  <p><input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required /></p>
+                  <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
               </div>
-              <div class="col col-6">
-                <div class="form-group">
-                    <label for="date">Date:</label>
+              <img [src]="game.creator.imgURL"/>
+              <h3>Host:</h3>
+              <p>{{game.creator.firstName}} {{game.creator.lastName}}</p>
+      </div>
+          <div class="basics">
+            <div class="form-group">
+                <h3>Date:</h3>
+                <p>
                     <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" required validDate/>
-                    <div class="error" *ngIf="date.errors && date.errors.required && (date.touched || date.dirty)">
-                        Please specify an event date!
-                    </div>
-                    <div class="error" *ngIf="date.errors && !date.errors.valid && !date.errors.required && (date.touched || date.dirty)">
-                        Please specify a valid event date, in the future, in YYYY-MM-DD format!
-                    </div>
+                </p>
+                <div class="error" *ngIf="date.errors && date.errors.required && (date.touched || date.dirty)">
+                    Please specify an event date!
                 </div>
-                <div class="form-group">
-                    <label for="time">Time (local):</label>
+                <div class="error" *ngIf="date.errors && !date.errors.valid && !date.errors.required && (date.touched || date.dirty)">
+                    Please specify a valid event date, in the future, in YYYY-MM-DD format!
+                </div>
+            </div>
+            <div class="form-group">
+                <h3>Time (local):</h3>
+                <p>
                     <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" required validTime />
-                    <div class="error" *ngIf="time.errors && !time.errors.valid && !time.errors.required && (time.touched || time.dirty)">
-                            Please specify an approximate event time in HH:MM format! Note that the hour range is 00 to 23.
-                    </div>
-                    <div class="error" *ngIf="time.errors && time.errors.required && (time.touched || time.dirty)">
-                        Please specify an approximate event time!
-                    </div>
+                </p>
+                <div class="error" *ngIf="time.errors && !time.errors.valid && !time.errors.required && (time.touched || time.dirty)">
+                        Please specify an approximate event time in HH:MM format! Note that the hour range is 00 to 23.
                 </div>
-                  <div class="form-group">
-                      <label for="location">Where: </label>
-                      <input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/>
-                      <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">You must give your event a location!</div>
-                  </div>
-                  <div class="form-group">
-                      <label for="details">Details: </label>
-                      <input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required/>
-                      <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">Please add details!</div>
-                  </div>           
-              </div>
-              <div class="col col-2">
-                  <p>Participants:</p>
-                  <p>{{game.players.length}} / <input #size="ngModel" type="number" step="1" name="size" [(ngModel)]="game.size" required min="2"/></p>
-                  <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please set a valid size!</div>
-                  <form #joinForm="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
-                      <input type="submit" value="Join This Event"/>
-                  </form>
-                  <form #leaveForm="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
-                      <input type="submit" value="Leave This Event"/>
-                  </form>
-                  <div *ngIf="game.creator._id === user_id">
-                      <form #deleteForm="ngForm" (submit)="onDelete()">
-                          <input type="submit" value="Delete This Event"/>
-                      </form>
-                      <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
-                        <input type="submit" value="Close This Event"/>
+                <div class="error" *ngIf="time.errors && time.errors.required && (time.touched || time.dirty)">
+                    Please specify an approximate event time!
+                </div>
+            </div>
+              <div class="form-group">
+                  <h3>Where:</h3>
+                  <p><input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/></p>
+                  <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">You must give your event a location!</div>
+              </div>       
+          </div>
+          <div class="details">
+              <div class="form-group">
+                <h3>Details: </h3>
+                <p><input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required/></p>
+                <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">Please add details!</div>
+              </div>    
+              <h3>Participants:</h3>
+              <p>{{game.players.length}} / <input #size="ngModel" type="number" step="1" name="size" [(ngModel)]="game.size" required min="2"/></p>
+              <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please set a valid size!</div>
+          </div>
+              <div class="actionForms">
+                    <form #joinForm="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
+                            <input type="submit" value="Join"/>
+                    </form>
+                    <form #leaveForm="ngForm" (submit)="onLeave()" *ngIf="game.players.indexOf(user_id) > -1">
+                            <input type="submit" value="Leave"/>
+                    </form>
+                    <form #deleteForm="ngForm" (submit)="onDelete()">
+                        <input type="submit" value="Delete"/>
+                    </form>
+                    <form #form="ngForm" *ngIf="game.open" (submit)="onClose()">
+                        <input type="submit" value="Close"/>
                     </form>
                     <form #form="ngForm" *ngIf="!game.open" (submit)="onOpen()">
-                      <input type="submit" value="Open This Event"/>
+                        <input type="submit" value="Open"/>
                     </form>
-                      <input type="submit" [disabled]="editForm.invalid || game.size < 2" value="Save This Event"/>
-                  </div>
-              </div>
+                    <input type="submit" [disabled]="editForm.invalid || game.size < 2" value="Save"/>
+                </div>
        </form>
 </div>

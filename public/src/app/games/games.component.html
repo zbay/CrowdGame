@@ -9,8 +9,8 @@
 <app-gamebox *ngFor="let game of games" [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
     (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
     (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
-<div>
-    <button *ngIf="pageNum > 1" (click)="decPage()">Page {{pageNum-1}}</button>
+<div class="pageTurner">
+    <button *ngIf="pageNum > 1" (click)="decPage()">&larr; Page {{pageNum-1}}</button>
     <span *ngIf="pageNum > 1 && games.length >= perPage"> | </span>
-    <button *ngIf="games.length >= perPage" (click)="incPage()">Page {{pageNum+1}}</button>
+    <button *ngIf="games.length >= perPage" (click)="incPage()">Page {{pageNum+1}} &rarr;</button>
 </div>

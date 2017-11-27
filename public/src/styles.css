@@ -23,6 +23,17 @@ legend{
     font-size:120%;
 }
 
+nav button, .pageTurner button{
+    font-weight:bold;
+    background-color: #313635;
+    color:#F8C82D;
+    width:110px;
+    height:40px;
+}
+nav{
+    background-color:grey;
+}
+
 .col-1 {width: 8.33%; }
 .col-2 {width: 16.66%; }
 .col-3 {width: 25%; }
@@ -41,8 +52,4 @@ legend{
     [class*="col-"] {
         width: 100%;
     }
-}
-
-.game img{
-    width:100px;
 }

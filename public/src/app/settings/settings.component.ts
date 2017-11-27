@@ -44,13 +44,10 @@ export class SettingsComponent implements OnInit {
 
     saveChanges(){
       this._loginService.editMe(this.user, (response) => {
-        console.log("saved changes??");
-        console.log(response);
         this.successMsg = response.success;
         this.errorMsg = undefined;
         this.getMe();
       }, (err) => {
-        console.log("error...");
         console.log(err);
         this.errorMsg = err;
       });

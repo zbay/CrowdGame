@@ -1,9 +1,10 @@
 .current{
-    background-color:red;
-    color:yellow;
+    background-color:#F8C82D;
+    color:#313635;
 }
-button{
-    font-weight:bold;
-    background-color: blue;
-    color:white;
+nav{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    flex-wrap:wrap;
 }
