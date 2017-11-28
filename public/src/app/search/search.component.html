@@ -1,7 +1,7 @@
-<form #form="ngForm" (submit)="search()">
+<form #form="ngForm" (submit)="search()" class="search">
   <div class="form-group">
     <label for="searchTerm">Search term (optional):</label>
-    <input placeholder="Name, location, or description" name="searchTerm" [(ngModel)]="searchTerm" type="text"/>
+    <input class="wide" placeholder="Name, place, or description" name="searchTerm" [(ngModel)]="searchTerm" type="text"/>
   </div>
   <div class="form-group">
     <label for="category">Category</label>
@@ -16,10 +16,10 @@
       <option value="Online gathering">Online gathering</option>
     </select>
   </div>
-  <div class="form-group" *ngIf="!myGamesTab">
-    <label for="justMine">Only get games I've signed up for</label>
+  <div class="form-group checkCentered" *ngIf="!myGamesTab">
+    <label for="justMine">My events only</label>
     <input type="checkbox" (change)="toggleMine()" name="justMine" />
   </div>
-  <input type="submit" value="Narrow the Field"/>
-  <button (click)="resetSearch(); form.reset()">Reset Search Criteria</button>
+  <input type="submit" value="Search"/>
+  <button (click)="resetSearch(); form.reset()">Reset Search</button>
 </form>

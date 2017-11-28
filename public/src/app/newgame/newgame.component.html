@@ -1,70 +1,79 @@
 <app-nav></app-nav>
-<form #form="ngForm" (submit)="newGame()">
+<form #form="ngForm" (submit)="newGame()" class="standardForm">
   <fieldset>
     <legend>New Activity</legend>
-    <div class="form-group">
-      <label for="name">Activity:</label>
-      <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
+    <div class="flexed">
+    <div class="left">
+        <div class="form-group">
+            <label for="name">Activity:</label>
+            <input type="text" name="name" [(ngModel)]="game.name" #name="ngModel" required />
+          </div>
+      
+          <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
+      
+          <div class="form-group">
+            <label for="location">Location (be specific):</label>
+            <div class="textareaWrapper">
+                <textarea name="location" [(ngModel)]="game.location" #location="ngModel" required></textarea>
+            </div>
+          </div>
+      
+          <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">An event location is required!</div>      
     </div>
-
-    <div class="error" *ngIf="name.errors && (name.touched || name.dirty)">You must give your event a name!</div>
-
-    <div class="form-group">
-      <label for="location">Location (be specific):</label>
-      <input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/>
+    <div class="center">
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" placeholder="YYYY-MM-DD" required validDate/>
+          </div>
+          <div class="error" *ngIf="date.errors && date.errors.required && (date.touched || date.dirty)">
+            Please specify an event date!
+          </div>
+          <div class="error" *ngIf="date.errors && !date.errors.valid && !date.errors.required && (date.touched || date.dirty)">
+            Please specify a valid event date, in the future, in YYYY-MM-DD format!
+          </div>
+      
+          <div class="form-group">
+            <label for="time">Time (local):</label>
+            <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" placeholder="HH-MM" required validTime />
+          </div>
+      
+          <div class="error" *ngIf="time.errors && !time.errors.valid && !time.errors.required && (time.touched || time.dirty)">
+            Please specify an approximate event time in HH:MM format! Note that the hour range is 00 to 23.
+          </div>
+          <div class="error" *ngIf="time.errors && time.errors.required && (time.touched || time.dirty)">
+              Please specify an approximate event time!
+          </div>
+      
+          <div class="form-group">
+            <label for="details">Details:</label>
+            <div class="textareaWrapper">
+                <textarea name="details" [(ngModel)]="game.details" #details="ngModel" required></textarea>
+            </div>
+          </div>
+          <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">An event description is required!</div>
     </div>
-
-    <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">An event location is required!</div>
-
-    <div class="form-group">
-      <label for="date">Date:</label>
-      <input type="date" name="date" [(ngModel)]="game.date" #date="ngModel" placeholder="YYYY-MM-DD" required validDate/>
+    <div class="right">
+        <div class="form-group">
+            <label for="size">Number of participants:</label>
+            <input type="number" name="size" step="1" [(ngModel)]="game.size" #size="ngModel" required min="2" />
+          </div>
+      
+          <div class="error" *ngIf="(size.errors && (size.touched || size.dirty)) || game.size < 2">Please specify a valid number of players!</div>
+      
+          <div class="form-group">
+            <label for="category">Category:</label>
+            <select name="category" [(ngModel)]="game.category">
+              <option value="Sport">Sport</option>
+              <option value="Game">Game</option>
+              <option value="Collaboration">Collaboration</option>
+              <option value="Gathering">Gathering</option>
+              <option value="Online game">Online game</option>
+              <option value="Online collaboration">Online collaboration</option>
+              <option value="Online gathering">Online gathering</option>
+            </select>
+          </div>
     </div>
-    <div class="error" *ngIf="date.errors && date.errors.required && (date.touched || date.dirty)">
-      Please specify an event date!
-    </div>
-    <div class="error" *ngIf="date.errors && !date.errors.valid && !date.errors.required && (date.touched || date.dirty)">
-      Please specify a valid event date, in the future, in YYYY-MM-DD format!
-    </div>
-
-    <div class="form-group">
-      <label for="time">Time (local):</label>
-      <input type="time" name="time" [(ngModel)] = "game.time" #time="ngModel" placeholder="HH-MM" required validTime />
-    </div>
-
-    <div class="error" *ngIf="time.errors && !time.errors.valid && !time.errors.required && (time.touched || time.dirty)">
-      Please specify an approximate event time in HH:MM format! Note that the hour range is 00 to 23.
-    </div>
-    <div class="error" *ngIf="time.errors && time.errors.required && (time.touched || time.dirty)">
-        Please specify an approximate event time!
-    </div>
-
-    <div class="form-group">
-      <label for="details">Details:</label>
-      <input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required />
-    </div>
-
-    <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">An event description is required!</div>
-
-    <div class="form-group">
-      <label for="size">Number of participants:</label>
-      <input type="number" name="size" step="1" [(ngModel)]="game.size" #size="ngModel" required min="2" />
-    </div>
-
-    <div class="error" *ngIf="(size.errors && (size.touched || size.dirty)) || game.size < 2">Please specify a valid number of players!</div>
-
-    <div class="form-group">
-      <label for="category">Category:</label>
-      <select name="category" [(ngModel)]="game.category">
-        <option value="Sport">Sport</option>
-        <option value="Game">Game</option>
-        <option value="Collaboration">Collaboration</option>
-        <option value="Gathering">Gathering</option>
-        <option value="Online game">Online game</option>
-        <option value="Online collaboration">Online collaboration</option>
-        <option value="Online gathering">Online gathering</option>
-      </select>
-    </div>
+  </div>
 
     <input type="submit" value="Post Activity" [disabled]="form.invalid || game.size < 2"/>
 

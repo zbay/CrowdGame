@@ -1,3 +1,6 @@
+body{
+    background-image: url("assets/img/light_honeycomb.png");     
+}
 .col{
     display:inline-block;
     vertical-align: top;
@@ -8,12 +11,51 @@
 }
 .jumbotron{
     font-weight:bold;
-    padding:40px;
+    padding:20px;
     text-align:center;
-    border:2px solid black;
+    border:5px solid #F8CB2D;
+    border-radius:5px;
+    color: #F8CB2D;
+    background-color: #A93B00;
+    font-family: 'Press Start 2P' cursive;
+}
+
+.footer{
+    font-weight:bold;
+    border:5px solid #A93B00;
+    border-radius:5px;
+    color: #A93B00;
+    background-color: #F8CB2D;
+    font-family: 'Press Start 2P' cursive;
+    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    align-self:center;
+    width:100%;
+}
+
+.VertCenterTop{
+    align-self:flex-start;
+}
+.VertCenterBottom{
+    align-self:flex-end;
+}
+
+.jumbotron h1, .jumbotron h2, .footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6{
+    font-family: 'Press Start 2P';
+}
+h1, h2, h3, h4, h5, h6, label, button, input[type="submit"], fieldset{
+    font-family: 'Ubuntu', sans-serif;
 }
 .error{
     color:red;
+    font-family: 'Ubuntu', sans-serif;
+    margin-top:15px;
+    margin-bottom:15px;
+    font-weight:bold;
+    text-align:center;
 }
 .success{
     color:green;
@@ -23,33 +65,162 @@ legend{
     font-size:120%;
 }
 
-nav button, .pageTurner button{
+nav button, .pageTurner button, .reloadButton{
     font-weight:bold;
-    background-color: #313635;
-    color:#F8C82D;
+    background-color:#0F2131;
+    color:#F8CB2D;
     width:110px;
     height:40px;
 }
+.pageTurner{
+    margin-bottom:15px;
+}
+.current{
+    background-color: #F8CB2D;
+    color:#A93B00;
+}
+legend{
+    border-color:#A93B00;
+}
 nav{
-    background-color:grey;
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    position:sticky;
+    top:0;
+    background-color:#36454f;
+}
+fieldset{
+    border: 2px solid #A93B00;
+    margin:5px;
+}
+.standardForm{
+    color:white;
+    background-color:#0F2131;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding:10px;
+}
+.standardForm *{
+    text-align:center;
+}
+.standardForm .form-group{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.standardForm .label, .standardForm input, .standardForm .textareaWrapper, .standardForm select{
+    display:block;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:5px;
+}
+.standardForm input{
+    font-weight:bold;
+}
+.standardForm input, .standardForm textarea{
+    margin-top:10px;
+}
+textarea{
+    min-width:50px;
 }
 
-.col-1 {width: 8.33%; }
-.col-2 {width: 16.66%; }
-.col-3 {width: 25%; }
-.col-4 {width: 33.33%; }
-.col-5 {width: 41.66%; }
-.col-6 {width: 50%; }
-.col-7 {width: 58.33%; }
-.col-8 {width: 66.66%; }
-.col-9 {width: 75%; }
-.col-10 {width: 83.33%; }
-.col-11 {width: 91.66%; }
-.col-12 {width: 100%; }
+a:link {
+    color: #F8CB2D;
+}
+a:visited {
+    color: cyan;
+}
+a:hover {
+    color: lime;
+}
+a:active {
+    color: magenta;
+}
+.wrapper{
+    min-height:100vh;
+    flex-direction:column;
+    display:flex;
+}
+.standardForm *{
+    text-align:center;
+}
+.standardForm .form-group{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.standardForm .label, .standardForm input, .standardForm .textareaWrapper, .standardForm select{
+    display:block;
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:5px;
+}
+.standardForm input{
+    font-weight:bold;
+}
+.standardForm input, .standardForm textarea{
+    margin-top:10px;
+}
+textarea{
+    min-width:50px;
+}
 
-@media only screen and (max-width: 500px) {
-    /* For mobile phones: */
-    [class*="col-"] {
-        width: 100%;
+a:link {
+    color: #F8CB2D;
+}
+a:visited {
+    color: cyan;
+}
+a:hover {
+    color: lime;
+}
+a:active {
+    color: magenta;
+}
+.wrapper{
+    min-height:100vh;
+    flex-direction:column;
+    display:flex;
+}
+.search{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+    margin-top:15px;
+    color:#0F2131;
+}
+.flexed{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap:wrap;
+}
+@media only screen and (max-width: 380px) {
+    nav button, .pageTurner button, .reloadButton {
+        font-size:10px;
+        width:60px;
+        height:30px;
     }
+}
+.pageTurner{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.reloadButton{
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+.searchAlert{
+    text-align:center;
+    font-weight:bold;
+    font-family:"Ubuntu", sans-serif;
+    color: #A93B00;
+    margin-bottom:15px;
 }

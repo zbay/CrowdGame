@@ -26,7 +26,7 @@
               </div>
     </div>
               <div class="actions" *ngIf="!game.editing">
-                  <h2>Actions</h2>
+                  <h3>Actions</h3>
                     <div class="actionForms" *ngIf="game.creator._id !== user_id">
                         <form #form="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
                             <input type="submit" value="Join"/>
@@ -57,6 +57,7 @@
                     </div>
   </div>
   <form *ngIf="game.editing" (submit)="onEdit(); game.editing=false" #editForm="ngForm">
+      <div class="gameInfo">
       <div class="namePlusHost">
             <h1>EDITING!</h1>
               <div class="form-group">
@@ -95,20 +96,27 @@
             </div>
               <div class="form-group">
                   <h3>Where:</h3>
-                  <p><input type="text" name="location" [(ngModel)]="game.location" #location="ngModel" required/></p>
+                  <div class="textareaWrapper">
+                      <textarea name="location" [(ngModel)]="game.location" #location="ngModel" required></textarea>
+                  </div>
                   <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">You must give your event a location!</div>
               </div>       
           </div>
           <div class="details">
               <div class="form-group">
                 <h3>Details: </h3>
-                <p><input type="text" name="details" [(ngModel)]="game.details" #details="ngModel" required/></p>
+                <div class="textareaWrapper">
+                    <textarea name="details" [(ngModel)]="game.details" #details="ngModel" required></textarea>
+                </div>
                 <div class="error" *ngIf="details.errors && (details.touched || details.dirty)">Please add details!</div>
               </div>    
               <h3>Participants:</h3>
               <p>{{game.players.length}} / <input #size="ngModel" type="number" step="1" name="size" [(ngModel)]="game.size" required min="2"/></p>
               <div class="error" *ngIf="size.errors && (size.touched || size.dirty)">Please set a valid size!</div>
           </div>
+          </div>
+          <div class="actions">
+              <h3>Actions</h3>
               <div class="actionForms">
                     <form #joinForm="ngForm" (submit)="onJoin()" *ngIf="game.players.indexOf(user_id) === -1 && game.open">
                             <input type="submit" value="Join"/>
@@ -127,5 +135,6 @@
                     </form>
                     <input type="submit" [disabled]="editForm.invalid || game.size < 2" value="Save"/>
                 </div>
+            </div>
        </form>
 </div>

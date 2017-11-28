@@ -1,49 +1,52 @@
 <app-nav></app-nav>
-<p>
-  {{ user | json }}
-</p>
-<form #form="ngForm" (submit)="saveChanges(); form.reset()">
+<form #form="ngForm" (submit)="saveChanges(); form.reset()" class="standardForm">
   <fieldset>
     <legend>Your Info</legend>
-    <div class="form-group">
-      <label for="firstName">First Name:</label>
-      <input type="text" name="firstName" [(ngModel)]="user.firstName" disabled />
+    <div class="flexed">
+    <div class="left">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" name="firstName" [(ngModel)]="user.firstName" disabled />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="lastName" [(ngModel)]="user.lastName" disabled/>
+          </div>
     </div>
-    <div class="form-group">
-      <label for="lastName">Last Name:</label>
-      <input type="text" name="lastName" [(ngModel)]="user.lastName" disabled/>
+    <div class="center">
+        <div class="form-group">
+            <label for="imgURL">Profile Picture URL:</label>
+            <div class="textareaWrapper">
+                <textarea type="text" name="imgURL" [(ngModel)]="user.imgURL" #imgURL="ngModel" required validUrl></textarea>
+            </div>
+          </div>
+      
+          <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)" class="error">Please enter a valid URL ending in .jpg, .jpeg, .png, or .gif!</div>
+      
+          <img class="img-responsive" [src]="lastSavedImgURL"/>
     </div>
-    
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required validEmail/>
+    <div class="right">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" name="email" [(ngModel)]="user.email" #email="ngModel" required validEmail/>
+          </div>
+      
+          <div *ngIf="email.errors && (email.dirty || email.touched)" class="error">Please enter a valid email!</div>
+      
+          <div class="form-group">
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" name="currentPassword" [(ngModel)]="user.currentPassword" #currentPassword="ngModel" required minlength="8"/>
+          </div>
+          <div *ngIf="currentPassword.errors && (currentPassword.dirty || currentPassword.touched)" class="error">Your password is 8 or more characters!</div>
+          
+          <div class="form-group">
+            <label for="newPassword">New Password (optional):</label>
+            <input type="password" name="newPassword" [(ngModel)]="user.newPassword"/>
+          </div>
     </div>
-
-    <div *ngIf="email.errors && (email.dirty || email.touched)" class="error">Please enter a valid email!</div>
-
-    <div class="form-group">
-      <label for="currentPassword">Current Password:</label>
-      <input type="password" name="currentPassword" [(ngModel)]="user.currentPassword" #currentPassword="ngModel" required minlength="8"/>
-    </div>
-    <div *ngIf="currentPassword.errors && (currentPassword.dirty || currentPassword.touched)" class="error">Your password is 8 or more characters!</div>
-    
-    <div class="form-group">
-      <label for="newPassword">New Password (optional):</label>
-      <input type="password" name="newPassword" [(ngModel)]="user.newPassword"/>
-    </div>
-
-    <div class="form-group">
-      <label for="imgURL">Profile Picture URL:</label>
-      <input type="text" name="imgURL" [(ngModel)]="user.imgURL" #imgURL="ngModel" required validUrl />
-    </div>
-
-    <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)" class="error">Please enter a valid URL ending in .jpg, .jpeg, .png, or .gif!</div>
-
-    <img class="img-responsive" [src]="lastSavedImgURL"/>
-    
+  </div>
     <div class="error" *ngIf="errorMsg">{{errorMsg}}</div>
     <div class="success" *ngIf="successMsg">{{successMsg}}</div>
-
     <input type="submit" [disabled]="form.invalid" value="Save Changes"/>
   </fieldset>
 </form>

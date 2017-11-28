@@ -1,8 +1,10 @@
 .gamebox{
-    border: 3px solid navy;
+    border: 3px solid #A93B00;
+    background-color: #0F2131;
     border-radius:3px;
-    margin-top:5px;
-    margin-bottom:5px;
+    color:white;
+    margin-top:15px;
+    margin-bottom:15px;
     padding:5px;
     text-align:center;
 }
@@ -20,10 +22,14 @@
     margin:10px;
 }
 .actions{
-    border-top:3px solid navy;
+    border:3px solid #F8CB2D;;
+    border-radius: 5px;
+}
+.actions{
+    background-color: #A93B00;
+    /*background-color: #0F2131;*/
 }
 .actions h3{
-    color:navy;
     display:inline-block;
 }
 .gameInfo{

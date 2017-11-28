@@ -1,5 +1,6 @@
 <nav>
-  <button [routerLink]="['/events']" [ngClass]="{current: currentRoute === '/events'}">Browse Events</button>
+  <button [routerLink]="['/events']" *ngIf="currentRoute !== '/events'" [ngClass]="{current: currentRoute === '/events'}">Browse Events</button>
+  <a href="/events" *ngIf="currentRoute === '/events'"><button [ngClass]="{current: currentRoute === '/events'}">Browse Events</button></a>
   <button [routerLink]="['/myEvents']" [ngClass]="{current: currentRoute === '/myEvents'}">My Events</button>
   <button [routerLink]="['/new']" [ngClass]="{current: currentRoute === '/new'}">New Event</button>
   <button [routerLink]="['/groups']" [ngClass]="{current: currentRoute === '/groups'}">Groups</button>

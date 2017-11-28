@@ -1,14 +1,11 @@
 <app-nav></app-nav>
-<p>
-  {{game | json}}}
-</p>
 <app-gamebox [game]="game" [user_id]="user_id" (joinEmitter)="joinGame($event)"
 (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
 (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
 <div class="chatBox">
       <div class="chatMessage" *ngFor="let comment of game.comments">
           <div>
-            <span>{{comment.author}}</span>, <span>{{comment.createdAt}}</span>: 
+            <span>{{comment.author}}</span>, <span>{{comment.createdAt | date:'short'}}</span>:
           </div>
           <p>{{comment.message}}</p>
       </div>
