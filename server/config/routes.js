@@ -29,6 +29,34 @@ module.exports = function(app) {
     app.get("/api/me", hasJWT, (req, res) => { // get your own data
         users.getMe(req, res);
     });
+    app.post("/api/requestFriend", hasJWT, (req, res) => { // make a friend request
+        users.requestFriend(req, res);
+    });
+    app.post("/api/cancelFriendRequest", hasJWT, (req, res) => { // cancel a friend request
+        users.cancelFriendRequest(req, res);
+    });
+    app.post("/api/denyFriend", hasJWT, (req, res) => { // deny somebody's friend request
+        users.denyFriend(req, res);
+    });
+    app.post("/api/approveFriend", hasJWT, (req, res) => {
+        users.approveFriend(req, res);
+    });
+    app.post("/api/deleteFriend", hasJWT, (req, res) => {
+        users.deleteFriend(req, res);
+    });
+    app.get("/api/friendInfo", hasJWT, (req, res) => {
+        users.getFriendInfo(req, res);
+    });
+    app.post("/api/users", hasJWT, (req, res) => {
+        console.log("should be getting users");
+        users.getAllUsers(req, res);
+    });
+    app.get("/api/requestedFriends", hasJWT, (req, res) => {
+        users.getRequestedFriends(req, res);
+    });
+    app.get("/api/requesteeFriends", hasJWT, (req, res) => {
+        users.getRequesteeFriends(req, res);
+    });
     app.post("/api/getGames", hasJWT, (req, res) => { // get all open games
         games.getGames(req, res);
     });
@@ -62,7 +90,10 @@ module.exports = function(app) {
     app.post("/api/game/:gameID/comment", hasJWT, (req, res) => { // post a comment
         games.saveComment(req, res);
     });
+    app.get("/api/friendGames", hasJWT, (req, res) => { // get all games your friends have posted
+        games.getFriendGames(req, res);
+    });
     app.all("*", (req, res, next) => { // defer to front-end routing
-        res.sendFile(path.resolve("./public/dist/index.html"))
+        res.sendFile(path.resolve("./public/dist/index.html"));
     });
 }

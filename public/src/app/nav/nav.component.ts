@@ -14,7 +14,6 @@ export class NavComponent implements OnInit {
   constructor(private _router: Router, private _loginService: LoginService) { 
     this.routeSubscription = _router.events.subscribe((event: any) => {
       this.currentRoute = event.url;
-      console.log(this.currentRoute);
     });
   }
 

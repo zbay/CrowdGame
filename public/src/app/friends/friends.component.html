@@ -1,0 +1,75 @@
+<app-nav></app-nav>
+<div class="error" *ngIf="friends.length === 0 && pendingFriends.length === 0 && pendingFriendsRequested.length === 0 && users.length === 0">
+  There are no other users here!
+</div>
+<div class="friends" *ngIf="friends.length > 0">
+    <h2>Friends</h2>
+    <table>
+      <thead>
+        <tr>
+          <td>Name:</td>
+          <td>Email:</td>
+          <td>Actions:</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let friend of friends">
+          <td>{{friend.firstName}} {{friend.lastName}}</td>
+          <td>{{friend.email}}</td>
+          <td>
+            <button (click)="unfriend(friend._id)">Unfriend</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<div *ngIf="pendingFriends.length > 0 || pendingFriendsRequested.length > 0" class="friends">
+<h2>Pending Friend Requests</h2>
+<table>
+    <thead>
+      <tr>
+        <td>Name:</td>
+        <td>Email:</td>
+        <td>Actions:</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let friend of pendingFriends">
+          <td>{{friend.firstName}} {{friend.lastName}}</td>
+          <td>{{friend.email}}</td>
+          <td>
+            <button (click)="approveFriend(friend._id)">Confirm</button> | <button (click)="deny(friend._id)">Deny</button>
+          </td>
+      </tr>
+      <tr *ngFor="let friend of pendingFriendsRequested">
+          <td>{{friend.firstName}} {{friend.lastName}}</td>
+          <td>{{friend.email}}</td>
+          <td>
+            <button (click)="cancel(friend._id)">Undo Request</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="users.length > 0" class="friends">
+    <h2>Users you Haven't Befriended</h2>
+    <!-- Add User search-->
+    <table>
+        <thead>
+          <tr>
+            <td>Name:</td>
+            <td>Email:</td>
+            <td>Actions:</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <button (click)="friendRequest(user._id)">Send Friend Request</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

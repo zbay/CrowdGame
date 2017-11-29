@@ -6,8 +6,9 @@ import { GamesComponent } from './games/games.component';
 import { GameComponent } from './game/game.component';
 import { NewgameComponent } from './newgame/newgame.component';
 import { AuthGuard } from './auth-guard.service';
-import { GroupsComponent } from './groups/groups.component';
+import { FriendsComponent } from './friends/friends.component';
 import { MygamesComponent } from './mygames/mygames.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: LandingComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'myEvents', pathMatch: 'full', component: MygamesComponent, canActivate: [AuthGuard]},
   {path: 'new', pathMatch: 'full', component: NewgameComponent, canActivate: [AuthGuard]},
   {path: 'event/:id', pathMatch: 'full', component: GameComponent, canActivate: [AuthGuard]},
-  {path: 'groups', pathMatch: 'full', component: GroupsComponent, canActivate: [AuthGuard]},
+  {path: 'friends', pathMatch: 'full', component: FriendsComponent, canActivate: [AuthGuard]},
+  {path: 'user/:id', pathMatch: 'full', component: UserComponent, canActivate: [AuthGuard]},
   {path: '**', component: LandingComponent},     
 ];
 

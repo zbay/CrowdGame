@@ -64,14 +64,14 @@ const GameSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "Comment"
     }],
-    /*groups: [{
-        type: Schema.Types.Objectid,
-        ref: "Group"
-    }],*/
     category: {
         type: String,
         enum: ["Sport", "Game", "Collaboration", "Gathering", "Online game", "Online collaboration", "Online gathering"],
         required: [true, "A game must possess a valid category!"]
+    },
+    friends_only: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 

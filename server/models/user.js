@@ -48,9 +48,13 @@ const UserSchema = new mongoose.Schema({
         defualt: false
     },
     last_login_attempt: {type: Number}, // minutes since 1/1/1970
-    groups: [{
-        type: Schema.ObjectId,
-        ref: "Group"
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    friend_requesters: [{
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }],
     strikes: {type: Number, default: 0}
 });

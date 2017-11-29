@@ -125,5 +125,81 @@ let self = module.exports = {
             }
         });
     });
+  },
+  requestFriend: function(req, res){
+    User.findByIdAndUpdate(req.body.pendingFriendID, {$push: {friend_requesters: req.body.jwt_user_id}}, (updateErr, msg) => {
+        if(updateErr){
+            return res.status(500).json(updateErr);
+        }     
+        return res.json({success: "Successfully submitted friend request!"});
+    });
+  },
+  cancelFriendRequest: function(req, res){
+    User.findByIdAndUpdate(req.body.pendingFriendID, {$pull: {friend_requesters: req.body.jwt_user_id}}, (updateErr, msg) => {
+        if(updateErr){
+            return res.status(500).json(updateErr);
+        }     
+        return res.json({success: "Successfully submitted friend request!"});
+    });
+  },
+  denyFriend: function(req, res){
+    User.findByIdAndUpdate(req.body.jwt_user_id, {$pull: {friend_requesters: req.body.pendingFriendID}}, (updateErr, msg) => {
+        if(updateErr){
+            return res.status(500).json(updateErr);
+        }     
+        return res.json({success: "Successfully deleted friend request!"});
+    });
+  },
+  approveFriend: function(req, res){
+    User.findByIdAndUpdate(req.body.jwt_user_id, {$pull: {friend_requesters: req.body.pendingFriendID}, $push: {friends: req.body.pendingFriendID}}, (updateErr, msg) => {
+        if(updateErr){
+            console.log(updateErr);
+            return res.status(500).json(updateErr);
+        }     
+        return res.json({success: "Successfully submitted friend request!"});
+    });
+  },
+  deleteFriend: function(req, res){
+    User.findByIdAndUpdate(req.body.jwt_user_id, {$pull: {friends: req.body.friendID}}, (updateErr, msg) => {
+        if(updateErr){
+            return res.status(500).json(updateErr);
+        }     
+        return res.json({success: "Successfully submitted friend request!"});
+    });
+  },
+  getFriendInfo: function(req, res){
+    User.findById(req.body.jwt_user_id).populate("friends").exec((err, user) => {
+        if(err){
+            return res.status(500).json(err); 
+        }
+        return res.json({friends: user.friends});
+    });
+  },
+  getAllUsers: function(req, res){
+    let perPage = 3;
+    let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
+    req.body.filterOut.push(req.body.jwt_user_id);
+    User.find({_id: {$nin: req.body.filterOut}}).limit(perPage).skip(skipNum).exec((err, users) => { // filter out certain users (friends and friend requesters, for instance)
+        if(err){
+            return res.status(500).json(err);
+        }
+        return res.json({users: users});
+    });
+  },
+  getRequestedFriends: function(req, res){ // get friends who've requested you as a friend
+    User.findById(req.body.jwt_user_id).populate("friend_requesters").exec((err, user) => {
+        if(err){
+            return res.status(500).json(err); 
+        }
+        return res.json({friend_requesters: user.friend_requesters});
+    });
+  },
+  getRequesteeFriends: function(req, res){ // get friends who you've requested as a friend
+    User.find({friend_requesters: {$in: [req.body.jwt_user_id]}}).exec((err, users) => {
+        if(err){
+            return res.status(500).json(err); 
+        }
+        return res.json({requestees: users});
+    });
   }
   }

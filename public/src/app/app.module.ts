@@ -21,13 +21,14 @@ import { SearchComponent } from './search/search.component';
 
 import { LoginService } from './login.service';
 import { GameService } from './game.service';
+import { FriendService } from './friend.service';
 import { AuthGuard } from './auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { GameboxComponent } from './gamebox/gamebox.component';
-import { GroupsComponent } from './groups/groups.component';
 import { MygamesComponent } from './mygames/mygames.component';
-import { GroupComponent } from './group/group.component';
+import { FriendsComponent } from './friends/friends.component';
+import { UserComponent } from './user/user.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -53,9 +54,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ValidDateDirective,
     AdminComponent,
     GameboxComponent,
-    GroupsComponent,
     MygamesComponent,
-    GroupComponent
+    FriendsComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +64,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService, GameService, AuthGuard, 
+  providers: [LoginService, GameService, FriendService, AuthGuard, 
   {
     provide: AuthHttp,
     useFactory: authHttpServiceFactory,

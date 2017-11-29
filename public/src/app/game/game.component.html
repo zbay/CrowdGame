@@ -3,8 +3,9 @@
 (leaveEmitter)="leaveGame($event)" (closeEmitter)="closeGame($event)" (editEmitter)="editGame($event)"
 (deleteEmitter)="deleteGame($event)" (openEmitter)="openGame($event)"></app-gamebox>
 <div class="chatBox">
+    <h2>{{game.name}} event chat</h2>
       <div class="chatMessage" *ngFor="let comment of game.comments">
-          <div>
+          <div class="authorPlusDate">
             <span>{{comment.author}}</span>, <span>{{comment.createdAt | date:'short'}}</span>:
           </div>
           <p>{{comment.message}}</p>
@@ -12,8 +13,10 @@
       <form #form="ngForm" (submit)="newComment(); form.reset()">
         <div class="form-group">
             <label for="message">New Comment: </label>
-            <input type="text" name="message" [(ngModel)]="comment" required/>
+            <br />
+            <textarea name="message" [(ngModel)]="comment" required></textarea>
         </div>
+        <br />
         <input type="submit" value="Post Comment" [disabled]="form.invalid"/>
       </form>
 </div>

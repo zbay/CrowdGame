@@ -170,5 +170,30 @@ module.exports = {
             }
             res.json({game: game});
         });
+    },
+    getFriendGames: function(req, res){
+        User.findById(req.body.jwt_user_id, (err, user) => { // step 1: get the logged-in user
+            if(err){
+                return res.status(500).json("Server error. Could not load the user!");
+            }
+            if(user.friends.length === 0){
+                return res.json({games: []});
+            }
+            User.find({_id: {$in: user.friends}}, (error, users) => { // step 2: get the user's friends
+            if(error){
+                return res.status(500).json("Server error. Could not load user friends!!");
+            }         
+            let friendIDs = [];
+            for(let i = 0; i < users.length; i++){
+                friendIDs.push(users[i]._id);
+            }
+            Game.find({"creator._id": {$in: friendIDs}}, (gameError, games) => {
+                if(gameError){
+                    return res.status(500).json("Server error. Could not load friend games!!");
+                }      
+                return res.json({games: games});
+            });
+            }); 
+        }); 
     }
 }

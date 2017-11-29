@@ -3,7 +3,7 @@
   <a href="/events" *ngIf="currentRoute === '/events'"><button [ngClass]="{current: currentRoute === '/events'}">Browse Events</button></a>
   <button [routerLink]="['/myEvents']" [ngClass]="{current: currentRoute === '/myEvents'}">My Events</button>
   <button [routerLink]="['/new']" [ngClass]="{current: currentRoute === '/new'}">New Event</button>
-  <button [routerLink]="['/groups']" [ngClass]="{current: currentRoute === '/groups'}">Groups</button>
+  <button [routerLink]="['/friends']" [ngClass]="{current: currentRoute === '/friends'}">Friends</button>
   <button [routerLink]="['/settings']" [ngClass]="{current: currentRoute === '/settings'}">Settings</button>
   <button (click)="logout()">Log Out</button>
 </nav>
