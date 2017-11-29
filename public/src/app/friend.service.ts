@@ -83,7 +83,6 @@ export class FriendService {
   }
 
   getUsers(data, successCallback, failCallback): Promise<void>{
-    console.log("should be getting users....");
     return this._authHttp.post(this.api_url + "users", data)
     .map(response => response.json())
     .toPromise()

@@ -15,7 +15,6 @@ const hasJWT = function (req, res, next) {
     });
 }
 
-// need to add a route for searching by title
 module.exports = function(app) {
     app.post("/api/user", (req, res) => { // add a new user
         users.newUser(req, res);
@@ -48,7 +47,6 @@ module.exports = function(app) {
         users.getFriendInfo(req, res);
     });
     app.post("/api/users", hasJWT, (req, res) => {
-        console.log("should be getting users");
         users.getAllUsers(req, res);
     });
     app.get("/api/requestedFriends", hasJWT, (req, res) => {

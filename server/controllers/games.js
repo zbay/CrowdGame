@@ -64,7 +64,6 @@ module.exports = {
         else{
             searchObj.datetime = {$gte: new Date()}; // restrict to future games, unless they're your games
         }
-        console.log(searchObj);
         Game.find(searchObj)
         .sort(sortObj) // get earliest games first (if browsing all), or most recently created games first (if browsing mine)
         .limit(perPage).skip(skipNum)

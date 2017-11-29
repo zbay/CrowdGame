@@ -179,8 +179,14 @@ let self = module.exports = {
     let perPage = 3;
     let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
     req.body.filterOut.push(req.body.jwt_user_id);
-    User.find({_id: {$nin: req.body.filterOut}}).limit(perPage).skip(skipNum).exec((err, users) => { // filter out certain users (friends and friend requesters, for instance)
+    console.log(req.body.searchTerm);
+    let searchObj = {_id: {$nin: req.body.filterOut}};
+    if(req.body.searchTerm && req.body.searchTerm.length > 0){
+        searchObj.$text = {$search: req.body.searchTerm};
+    }
+    User.find(searchObj).limit(perPage).skip(skipNum).exec((err, users) => { // filter out certain users (friends and friend requesters, for instance)
         if(err){
+            console.log(err);
             return res.status(500).json(err);
         }
         return res.json({users: users});

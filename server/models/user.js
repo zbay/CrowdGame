@@ -83,4 +83,5 @@ UserSchema.pre('save', function(next) { // password hashing before saving
     });
 });
 
+UserSchema.index({"email": 'text', "firstName": 'text', "lastName": 'text'}, {default_language: 'none'});
 mongoose.model('User', UserSchema);

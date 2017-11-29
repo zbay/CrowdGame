@@ -53,7 +53,10 @@
 </div>
 <div *ngIf="users.length > 0" class="friends">
     <h2>Users you haven't befriended</h2>
-    <!-- Add User search-->
+    <form #form="ngForm" (submit)="newSearch()">
+      <input style="display:inline;" type="text" placeholder="Name or full email" name="searchTerm" [(ngModel)]="searchTerm" required/>
+      <input style="display:inline;" type="submit" [disabled]="form.invalid" value="Search"/>
+    </form>
     <table>
         <thead>
           <tr>
