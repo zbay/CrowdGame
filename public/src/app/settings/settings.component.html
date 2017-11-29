@@ -23,7 +23,7 @@
       
           <div *ngIf="imgURL.errors && (imgURL.dirty || imgURL.touched)" class="error">Please enter a valid URL ending in .jpg, .jpeg, .png, or .gif!</div>
       
-          <img class="img-responsive" [src]="lastSavedImgURL"/>
+          <img class="img-responsive settingsImg" [src]="lastSavedImgURL"/>
     </div>
     <div class="right">
         <div class="form-group">

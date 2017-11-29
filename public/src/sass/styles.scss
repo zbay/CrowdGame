@@ -1,0 +1,333 @@
+@import './variables';
+@import './mixins';
+
+body{
+    background-image: url("../assets/img/light_honeycomb.png");     
+}
+.col{
+    display:inline-block;
+}
+.jumbotron{
+    font-weight:bold;
+    padding:20px;
+    text-align:center;
+    border:5px solid $honey-gold;
+    border-radius:5px;
+    color: $honey-gold;
+    background-color: $dark-orange;
+    font-family: $bookend-font;
+}
+
+.footer{
+    font-weight:bold;
+    border:5px solid $dark-orange;
+    border-radius:5px;
+    color: $dark-orange;
+    background-color: $honey-gold;
+    font-family: $bookend-font;
+    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    align-self:center;
+    width:100%;
+}
+
+.VertCenterTop{
+    align-self:flex-start;
+}
+.VertCenterBottom{
+    align-self:flex-end;
+}
+
+.jumbotron h1, .jumbotron h2, .footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6{
+    font-family: $bookend-font;
+}
+h1, h2, h3, h4, h5, h6, label, button, input[type="submit"], fieldset{
+    font-family: $inside-font;
+}
+.error{
+    color:red;
+    font-family: $inside-font;
+    margin-top:15px;
+    margin-bottom:15px;
+    font-weight:bold;
+    text-align:center;
+}
+.success{
+    color:green;
+}
+legend{
+    font-weight:bold;
+    font-size:120%;
+}
+
+nav button, .pageTurner button, .reloadButton{
+    font-weight:bold;
+    background-color:$light-navy;
+    color:$honey-gold;
+    width:110px;
+    height:40px;
+}
+.pageTurner{
+    margin-bottom:15px;
+}
+.current{
+    background-color: $honey-gold;
+    color:$dark-orange;
+}
+legend{
+    border-color:$dark-orange;
+}
+nav{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    position:sticky;
+    top:0;
+    background-color:$charcoal;
+
+    button{
+        margin:5px;
+    }
+}
+fieldset{
+    border: 2px solid $dark-orange;
+    margin:5px;
+}
+textarea{
+    min-width:50px;
+}
+
+a:link {
+    color: $honey-gold;
+}
+a:visited {
+    color: cyan;
+}
+a:hover {
+    color: lime;
+}
+a:active {
+    color: magenta;
+}
+.wrapper{
+    min-height:100vh;
+    flex-direction:column;
+    display:flex;
+}
+.standardForm {
+
+    color:white;
+    background-color:$light-navy;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding:10px;
+
+    *{
+        text-align:center;
+    }
+
+    .form-group{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+
+    .label, input, .textareaWrapper, select{
+        display:block;
+        text-align:center;
+        margin-left:auto;
+        margin-right:auto;
+        margin-bottom:5px;
+    }
+
+    input{
+        font-weight:bold;
+    }
+
+    input, textarea{
+        margin-top:10px;
+    }
+}
+
+textarea{
+    min-width:50px;
+}
+
+a:link {
+    color: $honey-gold;
+}
+a:visited {
+    color: cyan;
+}
+a:hover {
+    color: lime;
+}
+a:active {
+    color: magenta;
+}
+.wrapper{
+    min-height:100vh;
+    flex-direction:column;
+    display:flex;
+}
+.search{
+    @include spacedAround;
+    margin-bottom:15px;
+    margin-top:15px;
+    color:#0F2131;
+}
+.flexed{
+    @include spacedAround;
+}
+@media only screen and (max-width: 380px) {
+    nav button, .pageTurner button, .reloadButton {
+        font-size:10px;
+        width:60px;
+        height:30px;
+    }
+}
+.pageTurner{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.reloadButton{
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+.searchAlert{
+    text-align:center;
+    font-weight:bold;
+    font-family:$inside-font;
+    color: $dark-orange;
+    margin-bottom:15px;
+}
+.chatBox{
+    background-color:$charcoal;
+    text-align:center;
+    padding:10px;
+    color:white;
+    margin-bottom:10px;
+    margin-top:10px;
+    max-height:700px;
+    overflow-y: scroll;
+    font-family:$inside-font;
+}
+.chatMessage{
+    border: 3px solid $dark-orange;
+    border-radius:5px;
+    padding:5px;
+    margin-top:10px;
+    margin-bottom:10px;
+
+    .authorPlusDate{
+        font-weight:bold;
+        color: $honey-gold;
+    }
+}
+.friends{
+    text-align: center;
+}
+table, tr, td{
+    background-color: $light-navy;
+    color:white;
+    border: 3px solid white;
+    border-collapse: collapse;
+    font-family: $inside-font;
+    margin-left:auto;
+    margin-right:auto;
+}
+td{
+    padding:10px;
+}
+table{
+    margin-bottom:10px;
+}
+
+.gamebox{
+    border: 3px solid $dark-orange;
+    background-color: $light-navy;
+    border-radius:3px;
+    color:white;
+    margin-top:15px;
+    margin-bottom:15px;
+    padding:5px;
+    text-align:center;
+
+    img{
+        max-width:100px;
+    }
+}
+
+.actionForms{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    flex-wrap:wrap;
+
+    input{
+        width:100px;
+        margin:10px;
+    }
+}
+
+.actions{
+    border:3px solid $honey-gold;
+    border-radius: 5px;
+    background-color: $dark-orange;
+
+    h3{
+        display:inline-block;
+    }
+}
+
+.search{
+    .gameInfo{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap:wrap;
+    }
+    .namePlusHost, .basics, .details {
+        text-align:center;
+        width:33%;
+    }
+    .wide{
+        min-width:180px;
+    }
+    label{
+        display:block;
+        text-align:center;
+        margin-bottom:5px;
+    }
+
+    .checkCentered{
+        display:table;
+
+        label, input{
+            display:table-row;
+        }
+
+        input{
+            width:100%;
+        }
+    }
+    input[type="submit"], button{
+        width:110px;
+        height:50px;
+    }
+    .form-group{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+}
+
+.settingsImg{
+    width:200px;    
+}
+
