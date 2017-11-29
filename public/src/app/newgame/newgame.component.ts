@@ -9,7 +9,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./newgame.component.css']
 })
 export class NewgameComponent implements OnInit {
-  game = {name: "", time: "", date: "", details: "", location: "", size: 2, category: "Sport"};
+  game = {name: "", time: "", date: "", details: "", location: "", size: 2, category: "Sport", friends_only: false};
   errorMsg;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) { }
@@ -33,5 +33,9 @@ export class NewgameComponent implements OnInit {
 
   showErrors(err){
     this.errorMsg = JSON.parse(err._body).error;
+  }
+
+  toggleFriends(){
+    this.game.friends_only = !this.game.friends_only;
   }
 }

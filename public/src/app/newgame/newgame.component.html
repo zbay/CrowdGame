@@ -18,7 +18,12 @@
             </div>
           </div>
       
-          <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">An event location is required!</div>      
+          <div class="error" *ngIf="location.errors && (location.touched || location.dirty)">An event location is required!</div>   
+          
+          <div class="form-group checkCentered">
+            <label for="friendsOnly">Friends only:</label>
+            <input type="checkbox" (change)="toggleFriends()" name="friendsOnly" />
+          </div>
     </div>
     <div class="center">
         <div class="form-group">

@@ -201,5 +201,19 @@ let self = module.exports = {
         }
         return res.json({requestees: users});
     });
+  },
+  verifyFriendship: function(req, res){
+    User.findById(req.body.jwt_user_id, (err, user) => {
+        if(err){
+            return res.status(500).json(err); 
+        }
+        let areFriends = false;
+        for(let i = 0; i < user.friends.length; i++){
+            if(user.friends[i] == req.body.hostID){
+                areFriends = true;
+            }
+        }
+        return res.json({areFriends: areFriends});
+    });
   }
   }

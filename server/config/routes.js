@@ -57,6 +57,9 @@ module.exports = function(app) {
     app.get("/api/requesteeFriends", hasJWT, (req, res) => {
         users.getRequesteeFriends(req, res);
     });
+    app.get("/api/verifyFriendship", hasJWT, (req, res) => {
+        users.verifyFriendship(req, res);
+    });
     app.post("/api/getGames", hasJWT, (req, res) => { // get all open games
         games.getGames(req, res);
     });

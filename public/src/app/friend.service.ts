@@ -131,4 +131,16 @@ export class FriendService {
     });      
   }
 
+  verifyFriendship(data, successCallback, failCallback): Promise<void>{
+    return this._authHttp.post(this.api_url + "verifyFriendship", data)
+    .map(response => response.json())
+    .toPromise()
+    .then((user) => {
+      successCallback(user);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });      
+  }
+
 }

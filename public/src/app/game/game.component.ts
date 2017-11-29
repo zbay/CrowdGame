@@ -3,6 +3,7 @@ import { LoginService } from '../login.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
 import * as io from 'socket.io-client'
+import { FriendService } from '../friend.service';
 
 @Component({
   selector: 'app-game',
@@ -21,7 +22,7 @@ export class GameComponent implements OnInit {
   commentErr;
   idSubscription;
 
-  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _route: ActivatedRoute) { 
+  constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService, private _friendService: FriendService, private _route: ActivatedRoute) { 
     this.socket = io.connect();
     this.idSubscription = this._route.paramMap.subscribe(params => {
       if(this.gameID){
@@ -33,20 +34,35 @@ export class GameComponent implements OnInit {
   }
   
     ngOnInit() {
+      let token = this._loginService.getDecodedToken();
       this._gameService.getGame(this.gameID, (data) => {
-        this.game = data.game;
-        let token = this._loginService.getDecodedToken();
-        this.user_id = token.sub;
-        this.user_name = token.name;
-        this.socket.on("newMessage", function(newComment){
-          this.game.comments.push(newComment);
-        }.bind(this));
+        if(!data.game.friends_only || token.sub === data.game.creator._id){
+          this.setupGame(data, token);
+        }
+        else{
+          this._friendService.verifyFriendship({hostID: data.game.creator._id}, (res) => {
+            if(res.areFriends){
+              this.setupGame(data, token);
+            }
+            this.redirect.bind(this);
+          }, 
+          this.redirect.bind(this));
+        }
       }, this.redirect.bind(this));
     }
 
     ngOnDestroy(){
       this.socket.emit("leaveRoom", this.gameID);
       this.idSubscription.unsubscribe();
+    }
+
+    setupGame(data, token){
+      this.game = data.game;
+      this.user_id = token.sub;
+      this.user_name = token.name;
+      this.socket.on("newMessage", function(newComment){
+        this.game.comments.push(newComment);
+      }.bind(this));      
     }
 
     redirect(){
