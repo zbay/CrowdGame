@@ -93,7 +93,7 @@ module.exports = function(app) {
     app.post("/api/game/:gameID/comment", hasJWT, (req, res) => { // post a comment
         games.saveComment(req, res);
     });
-    app.get("/api/friendGames", hasJWT, (req, res) => { // get all games your friends have posted
+    app.post("/api/friendGames", hasJWT, (req, res) => { // get all games your friends have posted
         games.getFriendGames(req, res);
     });
     app.all("*", (req, res, next) => { // defer to front-end routing

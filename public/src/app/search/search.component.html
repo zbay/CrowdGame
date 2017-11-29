@@ -17,8 +17,8 @@
     </select>
   </div>
   <div class="form-group checkCentered" *ngIf="!myGamesTab">
-    <label for="justMine">My events only</label>
-    <input type="checkbox" (change)="toggleMine()" name="justMine" />
+    <label for="justFriends">Friends' events only</label>
+    <input type="checkbox" (change)="toggleFriends()" name="justFriends" />
   </div>
   <input type="submit" value="Search"/>
   <button (click)="resetSearch(); form.reset()">Reset Search</button>

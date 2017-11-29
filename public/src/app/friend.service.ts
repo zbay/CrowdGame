@@ -119,18 +119,6 @@ export class FriendService {
     });      
   }
 
-  getFriendGames(successCallback, failCallback): Promise<void>{
-    return this._authHttp.get(this.api_url + "friendGames")
-    .map(response => response.json())
-    .toPromise()
-    .then((user) => {
-      successCallback(user);
-    })
-    .catch((err) => {
-      failCallback(err);
-    });      
-  }
-
   verifyFriendship(data, successCallback, failCallback): Promise<void>{
     return this._authHttp.post(this.api_url + "verifyFriendship", data)
     .map(response => response.json())

@@ -47,7 +47,7 @@ module.exports = {
     },
     getGames: function(req, res){
         let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
-        let searchObj = {open: true};
+        let searchObj = {open: true, friends_only: false};
         let sortObj = {datetime: 1};
         if(req.body.searchTerm && req.body.searchTerm.length > 0){
             searchObj.$text = {$search: req.body.searchTerm};
@@ -58,11 +58,13 @@ module.exports = {
         if(req.body.justMine){
             searchObj.$or = [{creator: req.body.jwt_user_id}, {players: {$in: [req.body.jwt_user_id]}}]; // user created the game or is in game
             delete searchObj.open;
+            delete searchObj.friends_only;
             sortObj = {created_at: -1};
         }
         else{
             searchObj.datetime = {$gte: new Date()}; // restrict to future games, unless they're your games
         }
+        console.log(searchObj);
         Game.find(searchObj)
         .sort(sortObj) // get earliest games first (if browsing all), or most recently created games first (if browsing mine)
         .limit(perPage).skip(skipNum)
@@ -180,19 +182,31 @@ module.exports = {
                 return res.json({games: []});
             }
             User.find({_id: {$in: user.friends}}, (error, users) => { // step 2: get the user's friends
-            if(error){
-                return res.status(500).json("Server error. Could not load user friends!!");
-            }         
-            let friendIDs = [];
-            for(let i = 0; i < users.length; i++){
-                friendIDs.push(users[i]._id);
-            }
-            Game.find({"creator._id": {$in: friendIDs}}, (gameError, games) => {
-                if(gameError){
-                    return res.status(500).json("Server error. Could not load friend games!!");
-                }      
-                return res.json({games: games});
-            });
+                if(error){
+                    return res.status(500).json("Server error. Could not load user friends!!");
+                }         
+                let friendIDs = [];
+                for(let i = 0; i < users.length; i++){
+                    friendIDs.push(users[i]._id);
+                }
+                let skipNum = (parseInt(req.body.pageNum)-1)*perPage;
+                let searchObj = {open: true, "creator._id": {$in: friendIDs}};
+                let sortObj = {datetime: 1};
+                if(req.body.searchTerm && req.body.searchTerm.length > 0){
+                    searchObj.$text = {$search: req.body.searchTerm};
+                }
+                if(req.body.category && req.body.category !== "Any"){
+                    searchObj.category = req.body.category;
+                }
+                else{
+                    searchObj.datetime = {$gte: new Date()}; // restrict to future games, unless they're your games
+                }
+                Game.find(searchObj, (gameError, games) => {
+                    if(gameError){
+                        return res.status(500).json("Server error. Could not load friend games!!");
+                    }      
+                    return res.json({games: games});
+                });
             }); 
         }); 
     }

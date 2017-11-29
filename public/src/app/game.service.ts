@@ -157,4 +157,16 @@ export class GameService {
       failCallback(err);
     });
   }
+
+  getFriendGames(data, successCallback, failCallback): Promise<void>{
+    return this._authHttp.post("/api/friendGames", data)
+    .map(response => response.json())
+    .toPromise()
+    .then((user) => {
+      successCallback(user);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });      
+  }
 }

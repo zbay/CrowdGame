@@ -18,6 +18,7 @@ export class GamesComponent implements OnInit {
   pageNum: number = 1;
   perPage: number = 3;
   justMine: boolean = false;
+  justFriends: boolean = false;
 
   constructor(private _router: Router, private _loginService: LoginService, private _gameService: GameService) {
    }
@@ -32,6 +33,18 @@ export class GamesComponent implements OnInit {
   getGames(){
     let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || "", category: this.category || "Any", justMine: this.justMine};
     this._gameService.getOpenGames(queryObj, (data) => {
+      console.log("getting games?");
+      this.games = data.games;
+      this.user_id = this._loginService.getDecodedToken().sub;
+    }, () => {
+      this.redirect.bind(this);
+    });
+  }
+
+  getFriendGames(){
+    let queryObj = {pageNum: this.pageNum, searchTerm: this.searchTerm || "", category: this.category || "Any", justMine: this.justMine};
+    this._gameService.getFriendGames(queryObj, (data) => {
+      console.log("getting friend games?");
       this.games = data.games;
       this.user_id = this._loginService.getDecodedToken().sub;
     }, () => {
@@ -148,12 +161,19 @@ export class GamesComponent implements OnInit {
     this.searchTerm = query.searchTerm;
     this.category = query.category;
     this.justMine = query.justMine;
+    this.justFriends = query.justFriends;
     this.pageNum = 1;
-    this.getGames();
+    if(this.justFriends){
+      this.getFriendGames();
+    }
+    else{
+      this.getGames();
+    }
   }
 
   resetSearch(){
     this.searchTerm = "";
+    this.justFriends = false;
     this.category = "Any";
     this.pageNum = 1;
     this.getGames();

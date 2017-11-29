@@ -55,11 +55,11 @@ export class FriendsComponent implements OnInit {
     for(let i = 0; i < arr3.length; i++){
       arr4.push(arr3[i]._id);
     }
+    console.log(arr4);
     return arr4;
   }
 
   approveFriend(pendingFriendID: String){
-    console.log("approving friend...");
     this._friendService.approveFriend({pendingFriendID: pendingFriendID}, () => {
       for(let i = 0; i < this.pendingFriends.length; i++){
         if(pendingFriendID == this.pendingFriends[i]._id){
@@ -73,10 +73,9 @@ export class FriendsComponent implements OnInit {
 
   unfriend(friendID: String){
     this._friendService.deleteFriend({friendID: friendID}, () => {
-      for(let i = 0; i < this.pendingFriends.length; i++){
+      for(let i = 0; i < this.friends.length; i++){
         if(friendID == this.friends[i]._id){
-          let oldFriend = this.friends.splice(i, 1)[0];
-          this.users.push(oldFriend);
+          this.users.push(this.friends.splice(i, 1)[0]);
         }
       }
     },

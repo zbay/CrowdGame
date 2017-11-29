@@ -11,7 +11,8 @@ export class SearchComponent implements OnInit {
   @Output() resetEmitter = new EventEmitter();
   searchTerm: string = "";
   category: string = "Any";
-  justMine: boolean = false;
+  //justMine: boolean = false;
+  justFriends: boolean = false;
 
   constructor() { }
 
@@ -19,16 +20,15 @@ export class SearchComponent implements OnInit {
   }
 
   search(){
-    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category, justMine: this.justMine || this.myGamesTab});
+    this.searchEmitter.emit({searchTerm: this.searchTerm, category: this.category, justMine: this.myGamesTab, justFriends: this.justFriends});
   }
 
   resetSearch(){
     this.resetEmitter.emit();
   }
 
-  toggleMine(){
-    this.justMine = !this.justMine;
-    console.log(this.justMine);
+  toggleFriends(){
+    this.justFriends = !this.justFriends;
   }
 
 }
