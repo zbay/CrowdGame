@@ -73,3 +73,9 @@
         </tbody>
       </table>
 </div>
+<h3 *ngIf="pageNum > 1 || users.length >= perPage" style="text-align:center">Browse non-friend users</h3>
+<div class="pageTurner" *ngIf="pageNum > 1 || users.length >= perPage">
+  <button *ngIf="pageNum > 1" (click)="decPage()">&larr; Page {{pageNum-1}}</button>
+  <span *ngIf="pageNum > 1 && users.length >= perPage"> | </span>
+  <button *ngIf="users.length >= perPage" (click)="incPage()">Page {{pageNum+1}} &rarr;</button>
+</div>

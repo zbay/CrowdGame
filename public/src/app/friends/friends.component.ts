@@ -12,7 +12,8 @@ export class FriendsComponent implements OnInit {
   pendingFriends = [];
   pendingFriendsRequested = [];
   users = [];
-  pageNum: Number = 1;
+  pageNum = 1;
+  perPage = 3;
 
   constructor(private _friendService: FriendService, private _router: Router) {
 
@@ -38,6 +39,25 @@ export class FriendsComponent implements OnInit {
       that.redirect.bind(that));
     }, 
     that.redirect.bind(that));
+  }
+
+  searchUsers(){
+    this._friendService.getUsers(
+      {pageNum: this.pageNum, filterOut: this.concatIDs(this.friends, this.pendingFriends, this.pendingFriendsRequested)},
+       (userData) => {
+        this.users = userData.users;      
+    }, 
+    this.redirect.bind(this));
+  }
+
+  incPage(){
+    this.pageNum++;
+    this.searchUsers();
+  }
+
+  decPage(){
+    this.pageNum--;
+    this.searchUsers();
   }
 
   redirect(){
