@@ -1,5 +1,19 @@
-@import './variables';
-@import './mixins';
+/*@import './variables';
+@import './mixins';*/
+
+$honey-gold:#F8CB2D;
+$dark-orange:#A93B00;
+$charcoal:#36454f;
+$light-navy:#0F2131;
+$bookend-font:'Press Start 2P', cursive;
+$inside-font:'Ubuntu', sans-serif;
+
+@mixin spacedAround{
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content: space-around;
+}
 
 body{
     background-image: url("../assets/img/light_honeycomb.png");     
@@ -286,17 +300,11 @@ table{
     }
 }
 
+.gameInfo{
+    @include spacedAround;
+}
+
 .search{
-    .gameInfo{
-        display:flex;
-        flex-direction: row;
-        justify-content: space-around;
-        flex-wrap:wrap;
-    }
-    .namePlusHost, .basics, .details {
-        text-align:center;
-        width:33%;
-    }
     .wide{
         min-width:180px;
     }
