@@ -9,9 +9,11 @@ import { AuthGuard } from './auth-guard.service';
 import { FriendsComponent } from './friends/friends.component';
 import { MygamesComponent } from './mygames/mygames.component';
 import { UserComponent } from './user/user.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: LandingComponent},
+  {path: 'about', pathMatch: 'full', component: AboutComponent},
   {path: 'settings', pathMatch: 'full', component: SettingsComponent, canActivate: [AuthGuard]},
   {path: 'events', pathMatch: 'full', component: GamesComponent, canActivate: [AuthGuard]},
   {path: 'myEvents', pathMatch: 'full', component: MygamesComponent, canActivate: [AuthGuard]},

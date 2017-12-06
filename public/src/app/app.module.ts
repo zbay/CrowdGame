@@ -29,6 +29,7 @@ import { GameboxComponent } from './gamebox/gamebox.component';
 import { MygamesComponent } from './mygames/mygames.component';
 import { FriendsComponent } from './friends/friends.component';
 import { UserComponent } from './user/user.component';
+import { AboutComponent } from './about/about.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -57,6 +58,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MygamesComponent,
     FriendsComponent,
     UserComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
