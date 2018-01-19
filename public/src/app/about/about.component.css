@@ -6,6 +6,7 @@ img{
     margin-right:auto;
     border: 5px solid #F8CB2D;
     border-radius:5px;
+    max-width:95%;
 }
 .about{
     margin-left:3%;
